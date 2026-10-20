@@ -6,9 +6,4 @@ app.get("/", (req, res) => {
   res.send("project-submission-dashboard server runnig...");
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
-
-export default app
+export default app;
