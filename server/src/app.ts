@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import config from "./app/config";
 import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 import { notFound } from "./app/middleware/notFound";
-import { authRoutes } from "./app/modules/auth.route";
+import { authRoutes } from "./app/modules/auth/auth.route";
 
 const app: Application = express();
 
