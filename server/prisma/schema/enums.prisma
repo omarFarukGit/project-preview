@@ -9,3 +9,9 @@ enum SubmissionStatus {
   APPROVED
   REJECTED
 }
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  BLOCKED
+}
