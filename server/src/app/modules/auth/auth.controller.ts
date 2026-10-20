@@ -80,8 +80,34 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const logout = catchAsync(async (req: Request, res: Response) => {
+  res.cookie("accessToken", "", {
+    httpOnly: true,
+    secure: config.node_env !== "development",
+    sameSite: config.node_env === "development" ? "lax" : "none",
+    path: "/",
+    expires: new Date(0),
+  });
+
+  res.cookie("refreshToken", "", {
+    httpOnly: true,
+    secure: config.node_env !== "development",
+    sameSite: config.node_env === "development" ? "lax" : "none",
+    path: "/",
+    expires: new Date(0),
+  });
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User logout successfully",
+    data: null,
+  });
+});
+
 export const authControllers = {
   register,
   login,
   refreshToken,
+  logout,
 };
