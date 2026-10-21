@@ -13,7 +13,18 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: config.frontend_url, credentials: true }));
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || config.frontend_urls.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  }),
+);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("project-submission-dashboard server runnig...");

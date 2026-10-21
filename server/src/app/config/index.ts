@@ -7,7 +7,7 @@ export default {
   node_env: process.env.NODE_ENV as string,
   port: process.env.PORT,
   database_url: process.env.DATABASE_URL,
-  frontend_url: process.env.FRONTEND_URL,
+  frontend_urls: process.env.FRONTEND_URL?.split(",") ?? [],
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
 
   jwt_access_secret: process.env.JWT_ACCESS_SECRET as string,
