@@ -2,7 +2,10 @@ import { Role, SubmissionStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { AppError } from "../../utils/AppError";
 import { normalizeRepoUrl } from "../../utils/normalizeRepoUrl";
-import { CreateSubmissionPayload } from "./submissions.interface";
+import {
+  CreateSubmissionPayload,
+  SubmissionQuery,
+} from "./submissions.interface";
 import httpStatus from "http-status";
 
 const createSubmissions = async (
@@ -48,7 +51,87 @@ const getMySubmissions = async (studentId: string) => {
   });
 };
 
+const getAllSubmissions = async (query: SubmissionQuery) => {
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+  const sortBy = query.sortBy ? query.sortBy : "createdAt";
+  const sortOrder = query.sortOrder ? query.sortOrder : "desc";
+
+  const andConditions = [];
+
+  if (query.searchTerm) {
+    andConditions.push({
+      OR: [
+        {
+          projectName: {
+            contains: query.searchTerm,
+            mode: "insensitive" as const,
+          },
+        },
+        {
+          student: {
+            name: {
+              contains: query.searchTerm,
+              mode: "insensitive" as const,
+            },
+          },
+        },
+        {
+          student: {
+            email: {
+              contains: query.searchTerm,
+              mode: "insensitive" as const,
+            },
+          },
+        },
+      ],
+    });
+  }
+
+  if (query.status) {
+    andConditions.push({
+      status: query.status,
+    });
+  }
+
+  const submissions = await prisma.submission.findMany({
+    where: {
+      AND: andConditions,
+    },
+    take: limit,
+    skip: skip,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+    include: {
+      student: {
+        select: { id: true, name: true, email: true },
+      },
+      reviewedBy: {
+        select: { id: true, name: true },
+      },
+    },
+  });
+  const total = await prisma.submission.count({
+    where: {
+      AND: andConditions,
+    },
+  });
+
+  return {
+    data: submissions,
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+};
+
 export const submissionsService = {
   createSubmissions,
   getMySubmissions,
+  getAllSubmissions,
 };
