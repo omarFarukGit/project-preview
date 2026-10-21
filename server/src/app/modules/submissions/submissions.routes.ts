@@ -15,6 +15,7 @@ router.post(
   validateRequest(submissionsValidation.createSubmissionSchema),
   submissionsController.createsubmissions,
 );
+
 router.get(
   "/my-submissions",
   auth(Role.STUDENT),
@@ -25,6 +26,12 @@ router.get(
   "/stats",
   auth(Role.MENTOR, Role.ADMIN),
   submissionsController.getSubmissionStats,
+);
+
+router.get(
+  "/my-stats",
+  auth(Role.STUDENT),
+  submissionsController.getStudentStats,
 );
 
 router.get(

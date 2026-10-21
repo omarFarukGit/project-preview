@@ -235,6 +235,39 @@ const getSubmissionStats = async () => {
   return { total, pending, approved, rejected };
 };
 
+const getStudentStats = async (studentId: string) => {
+  const [total, pending, approved, rejected] = await Promise.all([
+    prisma.submission.count({
+      where: { studentId },
+    }),
+    prisma.submission.count({
+      where: {
+        studentId,
+        status: "PENDING",
+      },
+    }),
+    prisma.submission.count({
+      where: {
+        studentId,
+        status: "APPROVED",
+      },
+    }),
+    prisma.submission.count({
+      where: {
+        studentId,
+        status: "REJECTED",
+      },
+    }),
+  ]);
+
+  return {
+    total,
+    pending,
+    approved,
+    rejected,
+  };
+};
+
 export const submissionsService = {
   createSubmissions,
   getMySubmissions,
@@ -242,4 +275,5 @@ export const submissionsService = {
   getSubmissionById,
   getSubmissionStats,
   reviewSubmission,
+  getStudentStats,
 };

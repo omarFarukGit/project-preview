@@ -86,6 +86,18 @@ const getSubmissionStats = catchAsync(async (_req: Request, res: Response) => {
   });
 });
 
+const getStudentStats = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.userId as string;
+  const result = await submissionsService.getStudentStats(userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Student statistics retrieved successfully",
+    data: result,
+  });
+});
+
 export const submissionsController = {
   createsubmissions,
   getMySubmissions,
@@ -93,4 +105,5 @@ export const submissionsController = {
   getSubmissionById,
   getSubmissionStats,
   reviewSubmission,
+  getStudentStats,
 };
