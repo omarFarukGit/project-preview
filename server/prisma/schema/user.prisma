@@ -6,7 +6,8 @@ model User {
   role         Role       @default(STUDENT)
   isDeleted    Boolean    @default(false)
   status       UserStatus @default(ACTIVE)
-
+  imageUrl      String @default("")
+  imagePublicId String @default("")
   submissions Submission[] @relation("StudentSubmissions")
   reviews     Submission[] @relation("MentorReviews")
   feedbacks   Feedback[]   @relation("MentorFeedbacks")
