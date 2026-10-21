@@ -5,7 +5,6 @@ import { submissionsService } from "./submissions.service";
 import httpStatus from "http-status";
 
 const createsubmissions = catchAsync(async (req: Request, res: Response) => {
-    
   const studentId = req.user?.userId as string;
   const result = await submissionsService.createSubmissions(
     studentId,
@@ -20,6 +19,19 @@ const createsubmissions = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const submissionsContorler = {
+const getMySubmissions = catchAsync(async (req: Request, res: Response) => {
+  const studentId = req.user?.userId as string;
+  const result = await submissionsService.getMySubmissions(studentId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Your submissions retrieved successfully",
+    data: result,
+  });
+});
+
+export const submissionsController = {
   createsubmissions,
+  getMySubmissions,
 };

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { auth } from "../../middleware/checkAuth";
 import { Role } from "../../../generated/prisma/enums";
-import { submissionsContorler } from "./submissions.controller";
+import {  submissionsController } from "./submissions.controller";
 import { validateRequest } from "../../middleware/validateRequest";
 import { submissionsValidation } from "./submissions.validation";
 import { submissionRateLimiter } from "../../middleware/submissionRateLimiter";
@@ -13,7 +13,12 @@ router.post(
   auth(Role.STUDENT),
   submissionRateLimiter,
   validateRequest(submissionsValidation.createSubmissionSchema),
-  submissionsContorler.createsubmissions,
+  submissionsController.createsubmissions,
+);
+router.get(
+  "/my-submissions",
+  auth(Role.STUDENT),
+  submissionsController.getMySubmissions,
 );
 
 export const submissionsRoutes = router;
