@@ -88,6 +88,7 @@ export const SubmissionScalarFieldEnum = {
   id: 'id',
   projectName: 'projectName',
   repoUrl: 'repoUrl',
+  normalizedRepoUrl: 'normalizedRepoUrl',
   liveUrl: 'liveUrl',
   description: 'description',
   status: 'status',
@@ -106,6 +107,10 @@ export const UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   role: 'role',
+  isDeleted: 'isDeleted',
+  status: 'status',
+  imageUrl: 'imageUrl',
+  imagePublicId: 'imagePublicId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

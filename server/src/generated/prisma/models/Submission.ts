@@ -28,6 +28,7 @@ export type SubmissionMinAggregateOutputType = {
   id: string | null
   projectName: string | null
   repoUrl: string | null
+  normalizedRepoUrl: string | null
   liveUrl: string | null
   description: string | null
   status: $Enums.SubmissionStatus | null
@@ -41,6 +42,7 @@ export type SubmissionMaxAggregateOutputType = {
   id: string | null
   projectName: string | null
   repoUrl: string | null
+  normalizedRepoUrl: string | null
   liveUrl: string | null
   description: string | null
   status: $Enums.SubmissionStatus | null
@@ -54,6 +56,7 @@ export type SubmissionCountAggregateOutputType = {
   id: number
   projectName: number
   repoUrl: number
+  normalizedRepoUrl: number
   liveUrl: number
   description: number
   status: number
@@ -69,6 +72,7 @@ export type SubmissionMinAggregateInputType = {
   id?: true
   projectName?: true
   repoUrl?: true
+  normalizedRepoUrl?: true
   liveUrl?: true
   description?: true
   status?: true
@@ -82,6 +86,7 @@ export type SubmissionMaxAggregateInputType = {
   id?: true
   projectName?: true
   repoUrl?: true
+  normalizedRepoUrl?: true
   liveUrl?: true
   description?: true
   status?: true
@@ -95,6 +100,7 @@ export type SubmissionCountAggregateInputType = {
   id?: true
   projectName?: true
   repoUrl?: true
+  normalizedRepoUrl?: true
   liveUrl?: true
   description?: true
   status?: true
@@ -181,6 +187,7 @@ export type SubmissionGroupByOutputType = {
   id: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status: $Enums.SubmissionStatus
@@ -215,6 +222,7 @@ export type SubmissionWhereInput = {
   id?: Prisma.StringFilter<"Submission"> | string
   projectName?: Prisma.StringFilter<"Submission"> | string
   repoUrl?: Prisma.StringFilter<"Submission"> | string
+  normalizedRepoUrl?: Prisma.StringFilter<"Submission"> | string
   liveUrl?: Prisma.StringFilter<"Submission"> | string
   description?: Prisma.StringFilter<"Submission"> | string
   status?: Prisma.EnumSubmissionStatusFilter<"Submission"> | $Enums.SubmissionStatus
@@ -231,6 +239,7 @@ export type SubmissionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   projectName?: Prisma.SortOrder
   repoUrl?: Prisma.SortOrder
+  normalizedRepoUrl?: Prisma.SortOrder
   liveUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -245,11 +254,13 @@ export type SubmissionOrderByWithRelationInput = {
 
 export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  studentId_normalizedRepoUrl?: Prisma.SubmissionStudentIdNormalizedRepoUrlCompoundUniqueInput
   AND?: Prisma.SubmissionWhereInput | Prisma.SubmissionWhereInput[]
   OR?: Prisma.SubmissionWhereInput[]
   NOT?: Prisma.SubmissionWhereInput | Prisma.SubmissionWhereInput[]
   projectName?: Prisma.StringFilter<"Submission"> | string
   repoUrl?: Prisma.StringFilter<"Submission"> | string
+  normalizedRepoUrl?: Prisma.StringFilter<"Submission"> | string
   liveUrl?: Prisma.StringFilter<"Submission"> | string
   description?: Prisma.StringFilter<"Submission"> | string
   status?: Prisma.EnumSubmissionStatusFilter<"Submission"> | $Enums.SubmissionStatus
@@ -260,12 +271,13 @@ export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   feedbacks?: Prisma.FeedbackListRelationFilter
-}, "id">
+}, "id" | "studentId_normalizedRepoUrl">
 
 export type SubmissionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   projectName?: Prisma.SortOrder
   repoUrl?: Prisma.SortOrder
+  normalizedRepoUrl?: Prisma.SortOrder
   liveUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -285,6 +297,7 @@ export type SubmissionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Submission"> | string
   projectName?: Prisma.StringWithAggregatesFilter<"Submission"> | string
   repoUrl?: Prisma.StringWithAggregatesFilter<"Submission"> | string
+  normalizedRepoUrl?: Prisma.StringWithAggregatesFilter<"Submission"> | string
   liveUrl?: Prisma.StringWithAggregatesFilter<"Submission"> | string
   description?: Prisma.StringWithAggregatesFilter<"Submission"> | string
   status?: Prisma.EnumSubmissionStatusWithAggregatesFilter<"Submission"> | $Enums.SubmissionStatus
@@ -298,6 +311,7 @@ export type SubmissionCreateInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -312,6 +326,7 @@ export type SubmissionUncheckedCreateInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -326,6 +341,7 @@ export type SubmissionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -340,6 +356,7 @@ export type SubmissionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -354,6 +371,7 @@ export type SubmissionCreateManyInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -367,6 +385,7 @@ export type SubmissionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -378,6 +397,7 @@ export type SubmissionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -392,10 +412,16 @@ export type SubmissionScalarRelationFilter = {
   isNot?: Prisma.SubmissionWhereInput
 }
 
+export type SubmissionStudentIdNormalizedRepoUrlCompoundUniqueInput = {
+  studentId: string
+  normalizedRepoUrl: string
+}
+
 export type SubmissionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectName?: Prisma.SortOrder
   repoUrl?: Prisma.SortOrder
+  normalizedRepoUrl?: Prisma.SortOrder
   liveUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -409,6 +435,7 @@ export type SubmissionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectName?: Prisma.SortOrder
   repoUrl?: Prisma.SortOrder
+  normalizedRepoUrl?: Prisma.SortOrder
   liveUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -422,6 +449,7 @@ export type SubmissionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectName?: Prisma.SortOrder
   repoUrl?: Prisma.SortOrder
+  normalizedRepoUrl?: Prisma.SortOrder
   liveUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -551,6 +579,7 @@ export type SubmissionCreateWithoutFeedbacksInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -564,6 +593,7 @@ export type SubmissionUncheckedCreateWithoutFeedbacksInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -593,6 +623,7 @@ export type SubmissionUpdateWithoutFeedbacksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -606,6 +637,7 @@ export type SubmissionUncheckedUpdateWithoutFeedbacksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -619,6 +651,7 @@ export type SubmissionCreateWithoutStudentInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -632,6 +665,7 @@ export type SubmissionUncheckedCreateWithoutStudentInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -655,6 +689,7 @@ export type SubmissionCreateWithoutReviewedByInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -668,6 +703,7 @@ export type SubmissionUncheckedCreateWithoutReviewedByInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -710,6 +746,7 @@ export type SubmissionScalarWhereInput = {
   id?: Prisma.StringFilter<"Submission"> | string
   projectName?: Prisma.StringFilter<"Submission"> | string
   repoUrl?: Prisma.StringFilter<"Submission"> | string
+  normalizedRepoUrl?: Prisma.StringFilter<"Submission"> | string
   liveUrl?: Prisma.StringFilter<"Submission"> | string
   description?: Prisma.StringFilter<"Submission"> | string
   status?: Prisma.EnumSubmissionStatusFilter<"Submission"> | $Enums.SubmissionStatus
@@ -739,6 +776,7 @@ export type SubmissionCreateManyStudentInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -751,6 +789,7 @@ export type SubmissionCreateManyReviewedByInput = {
   id?: string
   projectName: string
   repoUrl: string
+  normalizedRepoUrl: string
   liveUrl: string
   description: string
   status?: $Enums.SubmissionStatus
@@ -763,6 +802,7 @@ export type SubmissionUpdateWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -776,6 +816,7 @@ export type SubmissionUncheckedUpdateWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -789,6 +830,7 @@ export type SubmissionUncheckedUpdateManyWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -801,6 +843,7 @@ export type SubmissionUpdateWithoutReviewedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -814,6 +857,7 @@ export type SubmissionUncheckedUpdateWithoutReviewedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -827,6 +871,7 @@ export type SubmissionUncheckedUpdateManyWithoutReviewedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectName?: Prisma.StringFieldUpdateOperationsInput | string
   repoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedRepoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   liveUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
@@ -870,6 +915,7 @@ export type SubmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   projectName?: boolean
   repoUrl?: boolean
+  normalizedRepoUrl?: boolean
   liveUrl?: boolean
   description?: boolean
   status?: boolean
@@ -887,6 +933,7 @@ export type SubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   projectName?: boolean
   repoUrl?: boolean
+  normalizedRepoUrl?: boolean
   liveUrl?: boolean
   description?: boolean
   status?: boolean
@@ -902,6 +949,7 @@ export type SubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   projectName?: boolean
   repoUrl?: boolean
+  normalizedRepoUrl?: boolean
   liveUrl?: boolean
   description?: boolean
   status?: boolean
@@ -917,6 +965,7 @@ export type SubmissionSelectScalar = {
   id?: boolean
   projectName?: boolean
   repoUrl?: boolean
+  normalizedRepoUrl?: boolean
   liveUrl?: boolean
   description?: boolean
   status?: boolean
@@ -926,7 +975,7 @@ export type SubmissionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectName" | "repoUrl" | "liveUrl" | "description" | "status" | "studentId" | "reviewedById" | "createdAt" | "updatedAt", ExtArgs["result"]["submission"]>
+export type SubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectName" | "repoUrl" | "normalizedRepoUrl" | "liveUrl" | "description" | "status" | "studentId" | "reviewedById" | "createdAt" | "updatedAt", ExtArgs["result"]["submission"]>
 export type SubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   reviewedBy?: boolean | Prisma.Submission$reviewedByArgs<ExtArgs>
@@ -953,6 +1002,7 @@ export type $SubmissionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     projectName: string
     repoUrl: string
+    normalizedRepoUrl: string
     liveUrl: string
     description: string
     status: $Enums.SubmissionStatus
@@ -1389,6 +1439,7 @@ export interface SubmissionFieldRefs {
   readonly id: Prisma.FieldRef<"Submission", 'String'>
   readonly projectName: Prisma.FieldRef<"Submission", 'String'>
   readonly repoUrl: Prisma.FieldRef<"Submission", 'String'>
+  readonly normalizedRepoUrl: Prisma.FieldRef<"Submission", 'String'>
   readonly liveUrl: Prisma.FieldRef<"Submission", 'String'>
   readonly description: Prisma.FieldRef<"Submission", 'String'>
   readonly status: Prisma.FieldRef<"Submission", 'SubmissionStatus'>

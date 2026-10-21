@@ -1,10 +1,13 @@
 model User {
-  id           String @id @default(cuid())
+  id           String     @id @default(cuid())
   name         String
-  email        String @unique
+  email        String     @unique
   passwordHash String
-  role         Role   @default(STUDENT)
-
+  role         Role       @default(STUDENT)
+  isDeleted    Boolean    @default(false)
+  status       UserStatus @default(ACTIVE)
+  imageUrl      String @default("")
+  imagePublicId String @default("")
   submissions Submission[] @relation("StudentSubmissions")
   reviews     Submission[] @relation("MentorReviews")
   feedbacks   Feedback[]   @relation("MentorFeedbacks")
