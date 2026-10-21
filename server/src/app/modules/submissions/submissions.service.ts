@@ -4,6 +4,7 @@ import { AppError } from "../../utils/AppError";
 import { normalizeRepoUrl } from "../../utils/normalizeRepoUrl";
 import {
   CreateSubmissionPayload,
+  ReviewSubmissionPayload,
   SubmissionQuery,
 } from "./submissions.interface";
 import httpStatus from "http-status";
@@ -164,6 +165,65 @@ const getSubmissionById = async (
   return submission;
 };
 
+const reviewSubmission = async (
+  submissionId: string,
+  mentorId: string,
+  payload: ReviewSubmissionPayload,
+) => {
+  const submission = await prisma.submission.findUnique({
+    where: { id: submissionId },
+    select: { id: true, status: true },
+  });
+
+  if (!submission) {
+    throw new AppError(httpStatus.NOT_FOUND, "Submission not found");
+  }
+
+  if (submission.status !== SubmissionStatus.PENDING) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      "Only pending submissions can be reviewed",
+    );
+  }
+
+  return prisma.$transaction(async (tx) => {
+    const updated = await tx.submission.updateMany({
+      where: {
+        id: submissionId,
+        status: SubmissionStatus.PENDING,
+      },
+      data: {
+        status: payload.status,
+        reviewedById: mentorId,
+      },
+    });
+
+    if (updated.count === 0) {
+      throw new AppError(
+        httpStatus.CONFLICT,
+        "Submission has already been reviewed",
+      );
+    }
+
+    await tx.feedback.create({
+      data: {
+        comment: payload.feedback,
+        submissionId,
+        mentorId,
+      },
+    });
+
+    return tx.submission.findUnique({
+      where: { id: submissionId },
+      include: {
+        student: { select: { id: true, name: true, email: true } },
+        reviewedBy: { select: { id: true, name: true } },
+        feedbacks: { orderBy: { createdAt: "desc" } },
+      },
+    });
+  });
+};
+
 const getSubmissionStats = async () => {
   const [total, pending, approved, rejected] = await Promise.all([
     prisma.submission.count(),
@@ -181,4 +241,5 @@ export const submissionsService = {
   getAllSubmissions,
   getSubmissionById,
   getSubmissionStats,
+  reviewSubmission,
 };

@@ -15,3 +15,8 @@ export interface SubmissionQuery {
   sortOrder?: string;
   sortBy?: string;
 }
+
+export interface ReviewSubmissionPayload {
+  status: "APPROVED" | "REJECTED";
+  feedback: string;
+}

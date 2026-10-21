@@ -58,6 +58,23 @@ const getSubmissionById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const reviewSubmission = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id as string;
+  const userId = req.user?.userId as string;
+  const result = await submissionsService.reviewSubmission(
+    id,
+    userId,
+    req.body,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Submission reviewed successfully",
+    data: result,
+  });
+});
+
 const getSubmissionStats = catchAsync(async (_req: Request, res: Response) => {
   const result = await submissionsService.getSubmissionStats();
 
@@ -75,4 +92,5 @@ export const submissionsController = {
   getAllSubmissions,
   getSubmissionById,
   getSubmissionStats,
+  reviewSubmission,
 };

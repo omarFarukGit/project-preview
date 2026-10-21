@@ -39,4 +39,11 @@ router.get(
   submissionsController.getSubmissionById,
 );
 
+router.patch(
+  "/:id/review",
+  auth(Role.MENTOR, Role.ADMIN),
+  validateRequest(submissionsValidation.reviewSubmissionSchema),
+  submissionsController.reviewSubmission,
+);
+
 export const submissionsRoutes = router;

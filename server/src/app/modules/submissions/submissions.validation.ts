@@ -59,7 +59,13 @@ const submissionQuerySchema = z.object({
   sortOrder: z.string().optional(),
   sortBy: z.string().optional(),
 });
+
+const reviewSubmissionSchema = z.object({
+  status: z.enum(["APPROVED", "REJECTED"]),
+  feedback: z.string().trim().min(1).max(1000),
+});
 export const submissionsValidation = {
   createSubmissionSchema,
   submissionQuerySchema,
+  reviewSubmissionSchema,
 };
