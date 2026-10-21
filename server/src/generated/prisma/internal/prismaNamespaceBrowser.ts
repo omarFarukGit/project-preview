@@ -88,6 +88,7 @@ export const SubmissionScalarFieldEnum = {
   id: 'id',
   projectName: 'projectName',
   repoUrl: 'repoUrl',
+  normalizedRepoUrl: 'normalizedRepoUrl',
   liveUrl: 'liveUrl',
   description: 'description',
   status: 'status',
