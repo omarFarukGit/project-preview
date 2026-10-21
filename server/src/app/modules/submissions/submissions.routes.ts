@@ -27,5 +27,10 @@ router.get(
   validateRequest(submissionsValidation.submissionQuerySchema),
   submissionsController.getAllSubmissions,
 );
+router.get(
+  "/:id",
+  auth(Role.STUDENT, Role.MENTOR, Role.ADMIN),
+  submissionsController.getSubmissionById,
+);
 
 export const submissionsRoutes = router;

@@ -3,6 +3,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { submissionsService } from "./submissions.service";
 import httpStatus from "http-status";
+import { Role } from "../../../generated/prisma/enums";
 
 const createsubmissions = catchAsync(async (req: Request, res: Response) => {
   const studentId = req.user?.userId as string;
@@ -43,8 +44,23 @@ const getAllSubmissions = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSubmissionById = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id as string;
+  const userId = req.user?.userId as string;
+  const role = req.user?.role as Role;
+  const result = await submissionsService.getSubmissionById(id, userId, role);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Submission retrieved successfully",
+    data: result,
+  });
+});
+
 export const submissionsController = {
   createsubmissions,
   getMySubmissions,
   getAllSubmissions,
+  getSubmissionById,
 };

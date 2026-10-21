@@ -130,8 +130,43 @@ const getAllSubmissions = async (query: SubmissionQuery) => {
   };
 };
 
+const getSubmissionById = async (
+  submissionId: string,
+  userId: string,
+  role: Role,
+) => {
+  const submission = await prisma.submission.findUnique({
+    where: { id: submissionId },
+    include: {
+      student: {
+        select: { id: true, name: true, email: true },
+      },
+      reviewedBy: {
+        select: { id: true, name: true },
+      },
+      feedbacks: {
+        orderBy: { createdAt: "desc" },
+        include: {
+          mentor: { select: { id: true, name: true } },
+        },
+      },
+    },
+  });
+
+  if (!submission) {
+    throw new AppError(httpStatus.NOT_FOUND, "Submission not found");
+  }
+
+  if (role === Role.STUDENT && submission.studentId !== userId) {
+    throw new AppError(httpStatus.FORBIDDEN, "You cannot view this submission");
+  }
+
+  return submission;
+};
+
 export const submissionsService = {
   createSubmissions,
   getMySubmissions,
   getAllSubmissions,
+  getSubmissionById,
 };
