@@ -22,6 +22,12 @@ router.get(
 );
 
 router.get(
+  "/stats",
+  auth(Role.MENTOR, Role.ADMIN),
+  submissionsController.getSubmissionStats,
+);
+
+router.get(
   "/",
   auth(Role.MENTOR, Role.ADMIN),
   validateRequest(submissionsValidation.submissionQuerySchema),

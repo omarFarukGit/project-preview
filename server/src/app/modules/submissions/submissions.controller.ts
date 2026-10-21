@@ -58,9 +58,21 @@ const getSubmissionById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSubmissionStats = catchAsync(async (_req: Request, res: Response) => {
+  const result = await submissionsService.getSubmissionStats();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Submission statistics retrieved successfully",
+    data: result,
+  });
+});
+
 export const submissionsController = {
   createsubmissions,
   getMySubmissions,
   getAllSubmissions,
   getSubmissionById,
+  getSubmissionStats,
 };
