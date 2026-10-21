@@ -3,6 +3,8 @@ import { prisma } from "../../lib/prisma";
 import { AppError } from "../../utils/AppError";
 import httpStatus from "http-status";
 import { GetAllUsersQuery } from "./user.interface";
+import { UploadApiResponse } from "cloudinary";
+import { cloudinary } from "../../lib/cloudinary";
 
 const me = async (userId: string) => {
   const user = await prisma.user.findUnique({
@@ -19,6 +21,63 @@ const me = async (userId: string) => {
   }
 
   return user;
+};
+
+const updateProfileImage = async (userId: string, buffer: Buffer) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    omit: {
+      passwordHash: true,
+    },
+  });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  const cloudinaryResult = await new Promise<UploadApiResponse>(
+    (resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          {
+            resource_type: "auto",
+          },
+          async (error, result) => {
+            if (error) {
+              return reject(error);
+            }
+
+            if (!result) {
+              return reject(new Error("No result returned from Cloudinary"));
+            }
+
+            resolve(result);
+          },
+        )
+        .end(buffer);
+    },
+  );
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      imageUrl: cloudinaryResult.secure_url,
+      imagePublicId: cloudinaryResult.public_id,
+    },
+    omit: {
+      passwordHash: true,
+    },
+  });
+
+  if (user.imagePublicId && user.imageUrl) {
+    await cloudinary.uploader.destroy(user.imagePublicId);
+  }
+
+  return updatedUser;
 };
 
 const promoteToMentor = async (userId: string) => {
@@ -234,6 +293,7 @@ const deleteUser = async (userId: string, adminId: string) => {
 
 export const usersService = {
   me,
+  updateProfileImage,
   promoteToMentor,
   getAllUsers,
   blockUser,

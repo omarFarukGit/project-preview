@@ -26,4 +26,8 @@ export default {
   tester_admin_name: process.env.TESTER_ADMIN_NAME as string,
   tester_admin_email: process.env.TESTER_ADMIN_EMAIL as string,
   tester_admin_password: process.env.TESTER_ADMIN_PASSWORD as string,
+
+  cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME as string,
+  cloudinary_api_key: process.env.CLOUDINARY_API_KEY as string,
+  cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET as string,
 };

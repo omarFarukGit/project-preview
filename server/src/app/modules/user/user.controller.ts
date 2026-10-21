@@ -15,6 +15,22 @@ const me = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateProfileImage = catchAsync(async (req, res) => {
+  const userId = req?.user?.userId as string;
+
+  const result = await usersService.updateProfileImage(
+    userId,
+    req.file?.buffer as Buffer,
+  );
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "User profile image updated successfully",
+    data: result,
+  });
+});
+
 const promoteToMentor = catchAsync(async (req, res) => {
   const { id } = req.params;
 
@@ -81,6 +97,7 @@ const deleteUser = catchAsync(async (req, res) => {
 
 export const usersController = {
   me,
+  updateProfileImage,
   getAllUsers,
   blockUser,
   suspendUser,
