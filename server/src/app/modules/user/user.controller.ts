@@ -28,7 +28,62 @@ const promoteToMentor = catchAsync(async (req, res) => {
   });
 });
 
+const getAllUsers = catchAsync(async (req, res) => {
+  const result = await usersService.getAllUsers(req.query);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Users retrieved successfully",
+    meta: result.meta,
+    data: result.data,
+  });
+});
+
+const blockUser = catchAsync(async (req, res) => {
+  const id = req.params.id as string;
+  const userId = req.user?.userId as string;
+  const result = await usersService.blockUser(id, userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User blocked successfully",
+    data: result,
+  });
+});
+
+const suspendUser = catchAsync(async (req, res) => {
+  const id = req.params.id as string;
+  const userId = req.user?.userId as string;
+  const result = await usersService.suspendUser(id, userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User suspended successfully",
+    data: result,
+  });
+});
+
+const deleteUser = catchAsync(async (req, res) => {
+  const id = req.params.id as string;
+  const userId = req.user?.userId as string;
+  const result = await usersService.deleteUser(id, userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User deleted successfully",
+    data: result,
+  });
+});
+
 export const usersController = {
   me,
+  getAllUsers,
+  blockUser,
+  suspendUser,
+  deleteUser,
   promoteToMentor,
 };
