@@ -1,7 +1,11 @@
 import app from "./app";
 import config from "./app/config";
 import { prisma } from "./app/lib/prisma";
-import { seedTesterAdmin, seedTesterStudent } from "./app/utils/seed";
+import {
+  seedTesterAdmin,
+  seedTesterMentor,
+  seedTesterStudent,
+} from "./app/utils/seed";
 
 const port = config.port || 5000;
 
@@ -10,6 +14,7 @@ const main = async () => {
   console.log(`Connected to the database`);
   await seedTesterStudent();
   await seedTesterAdmin();
+  await seedTesterMentor();
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

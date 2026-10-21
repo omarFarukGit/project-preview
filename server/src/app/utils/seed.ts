@@ -14,7 +14,7 @@ export const seedTesterStudent = async () => {
     });
 
     if (isTesterStudentExist) {
-      console.log("Tester Customer Already Exists!");
+      console.log("Tester Student Already Exists!");
       return;
     }
 
@@ -25,7 +25,7 @@ export const seedTesterStudent = async () => {
     if (!name || !email || !password) {
       throw new AppError(
         httpStatus.INTERNAL_SERVER_ERROR,
-        "Tester Customer Name, Email, Password Missing In Env File!!!",
+        "Tester Student Name, Email, Password Missing In Env File!!!",
       );
     }
 
@@ -47,7 +47,7 @@ export const seedTesterStudent = async () => {
 
     console.log("Tester Student Created : ", testerStudent);
   } catch (error) {
-    console.log("Error Seeding Tester Customer : ", error);
+    console.log("Error Seeding Tester Student : ", error);
 
     if (config.tester_student_email) {
       await prisma.user.delete({
@@ -58,6 +58,61 @@ export const seedTesterStudent = async () => {
     }
   }
 };
+
+export const seedTesterMentor = async () => {
+  try {
+    const isTesterMentorExist = await prisma.user.findUnique({
+      where: {
+        email: config.tester_mentor_email,
+      },
+    });
+
+    if (isTesterMentorExist) {
+      console.log("Tester Mentor Already Exists!");
+      return;
+    }
+
+    const name = config.tester_mentor_name;
+    const email = config.tester_mentor_email;
+    const password = config.tester_mentor_password;
+
+    if (!name || !email || !password) {
+      throw new AppError(
+        httpStatus.INTERNAL_SERVER_ERROR,
+        "Tester Mentor Name, Email, Password Missing In Env File!!!",
+      );
+    }
+
+    const hashedPassword = await bcrypt.hash(
+      password,
+      Number(config.bcrypt_salt_rounds),
+    );
+
+    const testerAdmin = await prisma.user.create({
+      data: {
+        name: name,
+        email: email,
+        role: Role.MENTOR,
+        passwordHash: hashedPassword,
+        status: "ACTIVE",
+        isDeleted: false,
+      },
+    });
+
+    console.log("Tester Mentor Created : ", testerAdmin);
+  } catch (error) {
+    console.log("Error Seeding Tester Mentor : ", error);
+
+    if (config.tester_mentor_email) {
+      await prisma.user.delete({
+        where: {
+          email: config.tester_mentor_email,
+        },
+      });
+    }
+  }
+};
+
 
 export const seedTesterAdmin = async () => {
   try {
