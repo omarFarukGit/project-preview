@@ -45,11 +45,60 @@ const createSubmissions = async (
   return createSubmition;
 };
 
-const getMySubmissions = async (studentId: string) => {
-  return prisma.submission.findMany({
-    where: { studentId },
-    orderBy: { createdAt: "desc" },
-  });
+const getMySubmissions = async (studentId: string, query: SubmissionQuery) => {
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+
+  const sortBy = query.sortBy ?? "createdAt";
+  const sortOrder = query.sortOrder ?? "desc";
+
+  const andConditions = [];
+
+  if (query.searchTerm) {
+    andConditions.push({
+      projectName: {
+        contains: query.searchTerm,
+        mode: "insensitive" as const,
+      },
+    });
+  }
+
+  if (query.status) {
+    andConditions.push({
+      status: query.status,
+    });
+  }
+
+  const where = {
+    studentId,
+    AND: andConditions,
+  };
+
+  const [submissions, total] = await Promise.all([
+    prisma.submission.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+    }),
+
+    prisma.submission.count({
+      where,
+    }),
+  ]);
+
+  return {
+    data: submissions,
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
 };
 
 const getAllSubmissions = async (query: SubmissionQuery) => {

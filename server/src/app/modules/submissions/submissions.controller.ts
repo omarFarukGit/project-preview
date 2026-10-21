@@ -22,7 +22,10 @@ const createsubmissions = catchAsync(async (req: Request, res: Response) => {
 
 const getMySubmissions = catchAsync(async (req: Request, res: Response) => {
   const studentId = req.user?.userId as string;
-  const result = await submissionsService.getMySubmissions(studentId);
+  const result = await submissionsService.getMySubmissions(
+    studentId,
+    req.query,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

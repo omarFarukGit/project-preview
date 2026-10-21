@@ -18,6 +18,7 @@ router.post(
 
 router.get(
   "/my-submissions",
+  validateRequest(submissionsValidation.submissionQuerySchema),
   auth(Role.STUDENT),
   submissionsController.getMySubmissions,
 );
