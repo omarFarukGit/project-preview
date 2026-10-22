@@ -1,9 +1,9 @@
-import { Navbar } from "@/components/shared/Navbar";
+import { HeroSection } from "@/components/Home/Hero";
 
 export default function HomePage() {
   return (
     <div>
-      Home
+      <HeroSection/>
       
     </div>
   );
