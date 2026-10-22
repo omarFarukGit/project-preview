@@ -1,11 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  ArrowRight,
-  Mail,
-  MoveUpRight,
-} from "lucide-react";
+import { ArrowRight, Mail, MoveUpRight } from "lucide-react";
 import Image from "next/image";
 
 const footerLinks = {
@@ -27,29 +23,28 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
           {/* Brand */}
           <div className="space-y-5">
-          <Link
-          href="/"
-          className="flex shrink-0 items-center gap-2.5"
-          aria-label="ProjectReview home"
-        >
-          <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
-            <Image
-              src="/images/project-review-logo-icon.png"
-              alt=""
-              width={500}
-              height={500}
-              className="size-8 object-contain rounded-xl"
-            />
-          </span>
-          <span className="text-lg font-bold tracking-tight text-foreground sm:text-xl">
-            Project<span className="text-primary">Review</span>
-          </span>
-        </Link>
+            <Link
+              href="/"
+              className="flex shrink-0 items-center gap-2.5"
+              aria-label="ProjectReview home"
+            >
+              <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
+                <Image
+                  src="/images/project-review-logo-icon.png"
+                  alt=""
+                  width={500}
+                  height={500}
+                  className="size-8 object-contain rounded-xl"
+                />
+              </span>
+              <span className="text-lg font-bold tracking-tight text-foreground sm:text-xl">
+                Project<span className="text-primary">Review</span>
+              </span>
+            </Link>
 
             <p className="max-w-sm text-sm leading-6 text-muted-foreground">
-              A simple platform for students to submit projects,
-              mentors to review their work, and everyone to keep
-              improving.
+              A simple platform for students to submit projects, mentors to
+              review their work, and everyone to keep improving.
             </p>
 
             <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary">
@@ -108,8 +103,9 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 flex flex-col gap-3 border-t border-border pt-5 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-muted-foreground">
-            © {new Date().getFullYear()} ProjectReview. All rights reserved.
+          <p className="text-muted-foreground" suppressHydrationWarning>
+            {/* © {new Date().getFullYear()} ProjectReview. All rights reserved. */}
+            © 2026 ProjectReview. All rights reserved.
           </p>
 
           <p className="text-muted-foreground">

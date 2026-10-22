@@ -118,6 +118,7 @@ export function HowItWorksSection() {
           </p>
 
           <Button
+            nativeButton={false}
             size="lg"
             className="group rounded-xl px-6"
             render={<Link href="/register" />}

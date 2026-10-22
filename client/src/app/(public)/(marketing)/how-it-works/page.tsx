@@ -112,8 +112,8 @@ export default function HowItWorksPage() {
 
           <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
             ProjectReview brings project submissions, mentor reviews, and
-            feedback together in a simple workflow designed to support
-            practical learning.
+            feedback together in a simple workflow designed to support practical
+            learning.
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
@@ -142,9 +142,7 @@ export default function HowItWorksPage() {
       <section className="border-y border-border bg-muted/30 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-semibold text-primary">
-              The Process
-            </p>
+            <p className="text-sm font-semibold text-primary">The Process</p>
 
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Four Steps to Get Started

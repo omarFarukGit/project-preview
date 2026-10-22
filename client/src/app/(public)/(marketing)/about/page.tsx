@@ -176,8 +176,8 @@ export default function AboutPage() {
             </h2>
 
             <p className="mt-4 leading-7 text-muted-foreground">
-              The principles behind a more organized and feedback-driven
-              project review experience.
+              The principles behind a more organized and feedback-driven project
+              review experience.
             </p>
           </div>
 

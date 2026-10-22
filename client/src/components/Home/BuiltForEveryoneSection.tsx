@@ -76,7 +76,8 @@ export function BuiltForEveryoneSection() {
 
           <p className="mt-5 text-base leading-7 text-muted-foreground sm:text-lg">
             Whether you're submitting a project, reviewing someone's work, or
-            managing the platform, ProjectReview gives you a workspace for your role.
+            managing the platform, ProjectReview gives you a workspace for your
+            role.
           </p>
         </div>
 
@@ -125,6 +126,7 @@ export function BuiltForEveryoneSection() {
 
                 <div className="mt-auto pt-8">
                   <Button
+                    nativeButton={false}
                     variant="outline"
                     className="group/button w-full rounded-xl"
                     render={<Link href={audience.href} />}

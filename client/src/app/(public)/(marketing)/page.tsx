@@ -7,11 +7,11 @@ import { PlatformFeaturesSection } from "@/components/Home/PlatformFeaturesSecti
 export default function HomePage() {
   return (
     <div>
-      <HeroSection/>
-      <HowItWorksSection/>
-      <PlatformFeaturesSection/>
-      <BuiltForEveryoneSection/>
-      <FinalCTASection/>      
+      <HeroSection />
+      <HowItWorksSection />
+      <PlatformFeaturesSection />
+      <BuiltForEveryoneSection />
+      <FinalCTASection />
     </div>
   );
 }

@@ -76,8 +76,9 @@ export function PlatformFeaturesSection() {
           </h2>
 
           <p className="mt-5 text-base leading-7 text-muted-foreground sm:text-lg">
-            From submitting your work to receiving expert feedback, ProjectReview
-            keeps your project review journey simple and organized.
+            From submitting your work to receiving expert feedback,
+            ProjectReview keeps your project review journey simple and
+            organized.
           </p>
         </div>
 
@@ -130,6 +131,7 @@ export function PlatformFeaturesSection() {
           </p>
 
           <Button
+            nativeButton={false}
             size="lg"
             className="group rounded-xl px-6"
             render={<Link href="/register" />}

@@ -1,12 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  ArrowRight,
-  CheckCircle2,
-  Rocket,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Rocket, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -42,6 +37,7 @@ export function FinalCTASection() {
 
           <div className="mt-5 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
             <Button
+              nativeButton={false}
               className="group h-10 rounded-lg px-5"
               render={<Link href="/register" />}
             >
@@ -50,7 +46,7 @@ export function FinalCTASection() {
             </Button>
 
             <Button
-              variant="outline"
+              nativeButton={false}
               className="h-10 rounded-lg border-background/20 bg-background/5 px-5 text-background hover:bg-background/10 hover:text-background"
               render={<Link href="/login" />}
             >

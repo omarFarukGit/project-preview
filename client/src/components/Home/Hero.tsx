@@ -25,25 +25,23 @@ export function HeroSection() {
         {/* Hero content */}
         <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
           <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-medium text-primary">
-            <Sparkles className="size-4" />
-            A Better Way to Showcase Your Work
+            <Sparkles className="size-4" />A Better Way to Showcase Your Work
           </div>
 
           <h1 className="text-4xl leading-[1.12] font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             Build Projects.
-            <span className="mt-2 block text-primary">
-              Get Feedback.
-            </span>
+            <span className="mt-2 block text-primary">Get Feedback.</span>
             Grow Your Skills.
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg lg:mx-0">
-            Submit your projects, receive meaningful feedback from
-            mentors, and track your progress — all in one place.
+            Submit your projects, receive meaningful feedback from mentors, and
+            track your progress — all in one place.
           </p>
 
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
             <Button
+              nativeButton={false}
               size="lg"
               className="h-12 rounded-xl px-6 font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
               render={<Link href="/register" />}
@@ -53,6 +51,7 @@ export function HeroSection() {
             </Button>
 
             <Button
+              nativeButton={false}
               size="lg"
               variant="outline"
               className="h-12 rounded-xl border-border bg-background/70 px-6"
@@ -107,9 +106,7 @@ export function HeroSection() {
                   key={stat.label}
                   className="rounded-xl border border-border/70 bg-background p-3 sm:p-4"
                 >
-                  <p className="text-xs text-muted-foreground">
-                    {stat.label}
-                  </p>
+                  <p className="text-xs text-muted-foreground">{stat.label}</p>
                   <p className="mt-2 text-2xl font-bold tracking-tight text-foreground">
                     {stat.value}
                   </p>
@@ -144,8 +141,8 @@ export function HeroSection() {
                   Mentor feedback
                 </p>
                 <p className="mt-1 text-sm leading-6 text-card-foreground">
-                  Great structure and a clear user experience. Keep
-                  improving your project documentation.
+                  Great structure and a clear user experience. Keep improving
+                  your project documentation.
                 </p>
               </div>
             </div>
