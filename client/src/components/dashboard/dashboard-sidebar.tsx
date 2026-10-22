@@ -16,6 +16,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 import { adminRoutes } from "@/routes/admin.routes";
@@ -32,18 +33,37 @@ const sidebarRoutes: Record<
   STUDENT: studentRoutes,
 };
 
-export function DashboardSidebar({ role }: { role: UserRole }) {
+export function DashboardSidebar({
+  role,
+}: {
+  role: UserRole;
+}) {
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
+
   const routes = sidebarRoutes[role];
+
+  // Find the exact matching route first.
+  const allItems = routes.flatMap((group) => group.items);
+
+  const activeRoute =
+    allItems.find((item) => pathname === item.url) ??
+    allItems
+      .filter(
+        (item) =>
+          item.url !== "/" &&
+          pathname.startsWith(`${item.url}/`),
+      )
+      .sort((a, b) => b.url.length - a.url.length)[0];
 
   return (
     <Sidebar>
       <SidebarHeader>
-        {/* Logo */}
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2.5"
           aria-label="ProjectReview home"
+          onClick={() => setOpenMobile(false)}
         >
           <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
             <Image
@@ -64,25 +84,28 @@ export function DashboardSidebar({ role }: { role: UserRole }) {
       <SidebarContent>
         {routes.map((group) => (
           <SidebarGroup key={group.title}>
-            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
+            <SidebarGroupLabel>
+              {group.title}
+            </SidebarGroupLabel>
 
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => {
-                  const isActive =
-                    pathname === item.url ||
-                    (item.url !== "/" && pathname.startsWith(`${item.url}/`));
+                  const isActive = activeRoute?.url === item.url;
 
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
                         isActive={isActive}
                         tooltip={item.title}
-                        className="cursor-pointer hover:bg-primary/5 hover:text-foreground data-[active=true]:bg-primary/15 data-[active=true]:text-primary mt-1"
+                        className="mt-1 cursor-pointer hover:bg-primary/5 hover:text-foreground data-[active=true]:bg-primary/15 data-[active=true]:text-primary"
                       >
                         <Link
                           href={item.url}
-                          aria-current={isActive ? "page" : undefined}
+                          aria-current={
+                            isActive ? "page" : undefined
+                          }
+                          onClick={() => setOpenMobile(false)}
                         >
                           {item.title}
                         </Link>
