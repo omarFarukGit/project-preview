@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function page() {
-  return (
-    <div>
-      admin
-    </div>
-  )
+  return <div>admin</div>;
 }

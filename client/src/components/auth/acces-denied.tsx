@@ -35,16 +35,14 @@ export default function AccessDenied() {
           </h1>
 
           <p className="mx-auto max-w-sm text-sm leading-6 text-muted-foreground sm:text-base">
-            You don&apos;t have permission to access this page. Please return
-            to your dashboard or go back and try another page.
+            You don&apos;t have permission to access this page. Please return to
+            your dashboard or go back and try another page.
           </p>
         </div>
 
         {/* Actions */}
         <div className="mt-7 flex flex-row justify-center gap-3 ">
-          <Button
-            className="h-11 cursor-pointer rounded-xl px-5"
-          >
+          <Button className="h-11 cursor-pointer rounded-xl px-5">
             <Link href="/" className=" flex justify-center items-center">
               <Home className="mr-2 size-4" />
               Go to Home

@@ -1,4 +1,4 @@
-const prefix = "/student-dasboard";
+const prefix = "/student-dashboard";
 
 export const studentRoutes = [
   {

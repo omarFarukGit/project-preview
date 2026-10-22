@@ -1,4 +1,4 @@
-const prefix = "/mentor-dasboard";
+const prefix = "/mentor-dashboard";
 export const mentorRoutes = [
   {
     title: "Mentor",

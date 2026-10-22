@@ -1,4 +1,4 @@
-const prefix = "/admin-dasboard";
+const prefix = "/admin-dashboard";
 
 export const adminRoutes = [
   {
@@ -16,5 +16,3 @@ export const adminRoutes = [
     ],
   },
 ];
-
-
