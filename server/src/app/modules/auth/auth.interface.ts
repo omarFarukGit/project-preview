@@ -3,6 +3,15 @@ export interface IRegisterPayload {
   email: string;
   password: string;
   role: "STUDENT";
+
+  bio?: string;
+  phone?: string;
+  country?: string;
+  city?: string;
+  address?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  portfolioUrl?: string;
 }
 
 export interface ILoginPayload {

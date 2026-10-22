@@ -14,6 +14,17 @@ const me = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const updateMyProfile = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.userId as string;
+
+  const result = await usersService.updateMyProfile(userId, req.body);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Profile updated successfully",
+    data: result,
+  });
+});
 
 const updateProfileImage = catchAsync(async (req, res) => {
   const userId = req?.user?.userId as string;
@@ -97,6 +108,7 @@ const deleteUser = catchAsync(async (req, res) => {
 
 export const usersController = {
   me,
+  updateMyProfile,
   updateProfileImage,
   getAllUsers,
   blockUser,
