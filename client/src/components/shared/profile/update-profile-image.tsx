@@ -122,7 +122,7 @@ export default function UpdateProfileImage({
           type="button"
           size="icon"
           variant="secondary"
-          className="absolute right-1 bottom-1 size-9 rounded-full border shadow-sm"
+          className="absolute right-1 bottom-1 size-9 rounded-full border shadow-sm cursor-pointer"
         >
           <Camera className="size-4" />
           <span className="sr-only">Change profile picture</span>
@@ -152,10 +152,11 @@ export default function UpdateProfileImage({
 
             {file && (
               <Button
+              
                 type="button"
                 size="icon"
                 variant="destructive"
-                className="absolute -top-2 -right-2 size-7 rounded-full"
+                className="absolute -top-2 -right-2 size-7 rounded-full cursor-pointer"
                 onClick={handleRemove}
                 disabled={isPending}
               >
@@ -180,7 +181,7 @@ export default function UpdateProfileImage({
             onClick={() => inputRef.current?.click()}
             disabled={isPending}
           >
-            <ImagePlus className="mr-2 size-4" />
+            <ImagePlus className="mr-2 size-4 cursor-pointer" />
             Choose Image
           </Button>
 
@@ -191,13 +192,14 @@ export default function UpdateProfileImage({
 
         <DialogFooter>
           <DialogClose>
-            <Button type="button" variant="outline" disabled={isPending}>
+            <Button  className={'cursor-pointer'} type="button" variant="outline" disabled={isPending}>
               Cancel
             </Button>
           </DialogClose>
 
           <Button
             type="button"
+            className={'cursor-pointer'}
             onClick={handleSubmit}
             disabled={!file || isPending}
           >

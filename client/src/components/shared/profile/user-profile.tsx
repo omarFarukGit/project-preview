@@ -1,70 +1,48 @@
-
 "use client";
 
+import Image from "next/image";
 import {
   CalendarDays,
   CheckCircle2,
+  Clock3,
+  FileText,
+  Globe,
   Mail,
+  MapPin,
+  Phone,
   ShieldCheck,
   UserRound,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
+
+import {
+  useGetMe,
+  useUpdateMyProfileInformation,
+  useUpdateMyProfileImage,
+} from "@/hooks/auth.hook";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-import type { UpdateProfileFormValues } from "./edit-profile-dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import EditProfileDialog from "./edit-profile-dialog";
 import UpdateProfileImage from "./update-profile-image";
 import { toast } from "@/components/ui/toast";
-import { useGetMe, useUpdateMyProfileImage, useUpdateMyProfileInformation } from "@/hooks/auth.hook";
-
-
-type UserProfileData = {
-  id: string;
-  name: string;
-  email: string;
-  role: "STUDENT" | "MENTOR" | "ADMIN";
-  isDeleted: boolean;
-  status: "ACTIVE" | "INACTIVE" | "BLOCKED";
-  imageUrl: string | null;
-  imagePublicId: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type ApiResponse<T> = {
-  success: boolean;
-  statusCode: number;
-  message: string;
-  data: T;
-};
+import { ApiResponse, UserProfileData } from "@/types/user.types";
+import { UpdateProfileFormValues } from "@/validation/user.validation";
+import { formatDate, getInitials, getStatusVariant } from "@/utils/user-utils";
+import ProfileItem from "./profile-items";
 
 export default function UserProfile() {
   const queryClient = useQueryClient();
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useGetMe();
+  const { data: response, isLoading, isError, error, refetch } = useGetMe();
 
   const updateProfileMutation = useUpdateMyProfileInformation();
   const updateProfileImageMutation = useUpdateMyProfileImage();
 
-  // Expected response: { success, statusCode, message, data: user }
-  const user = (
-    response as ApiResponse<UserProfileData> | undefined
-  )?.data;
+  // Expected API response: { success, statusCode, message, data: user }
+  const user = (response as ApiResponse<UserProfileData> | undefined)?.data;
 
   const handleUpdateProfile = async (
     data: UpdateProfileFormValues,
@@ -85,9 +63,7 @@ export default function UserProfile() {
     } catch (error) {
       toast.add({
         description:
-          error instanceof Error
-            ? error.message
-            : "Failed to update profile",
+          error instanceof Error ? error.message : "Failed to update profile",
         type: "error",
       });
 
@@ -95,13 +71,11 @@ export default function UserProfile() {
     }
   };
 
-  const handleUpdateProfileImage = async (
-    file: File,
-  ): Promise<void> => {
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
+  const handleUpdateProfileImage = async (file: File): Promise<void> => {
+    const formData = new FormData();
+    formData.append("image", file);
 
+    try {
       await updateProfileImageMutation.mutateAsync(formData);
 
       await queryClient.invalidateQueries({
@@ -129,37 +103,55 @@ export default function UserProfile() {
 
   if (isLoading) {
     return (
-      <div className="grid gap-6 lg:grid-cols-2">
-        {["profile", "account", "activity", "security"].map(
-          (section) => (
-            <Card key={section}>
+      <div className="space-y-6 bg-background text-foreground">
+        <div className="h-8 w-48 animate-pulse rounded-md bg-muted" />
+
+        <Card>
+          <CardContent className="space-y-4 p-6">
+            <div className="flex items-center gap-4">
+              <div className="size-24 animate-pulse rounded-full bg-muted" />
+              <div className="flex-1 space-y-3">
+                <div className="h-5 w-40 animate-pulse rounded bg-muted" />
+                <div className="h-4 w-56 animate-pulse rounded bg-muted" />
+                <div className="h-5 w-24 animate-pulse rounded bg-muted" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          {[1, 2, 3, 4].map((item) => (
+            <Card key={item}>
               <CardContent className="space-y-4 p-6">
-                <div className="h-6 w-40 animate-pulse rounded bg-muted" />
+                <div className="h-5 w-40 animate-pulse rounded bg-muted" />
                 <div className="h-4 w-full animate-pulse rounded bg-muted" />
                 <div className="h-4 w-3/4 animate-pulse rounded bg-muted" />
+                <div className="h-4 w-5/6 animate-pulse rounded bg-muted" />
               </CardContent>
             </Card>
-          ),
-        )}
+          ))}
+        </div>
       </div>
     );
   }
 
   if (isError || !user) {
     return (
-      <Card>
+      <Card className="border-border bg-card text-card-foreground">
         <CardContent className="flex flex-col items-center gap-3 p-8 text-center">
-          <p className="font-medium text-foreground">
-            Unable to load your profile.
-          </p>
+          <div className="flex size-14 items-center justify-center rounded-full bg-muted">
+            <UserRound className="size-7 text-muted-foreground" />
+          </div>
+
+          <h2 className="text-lg font-semibold">Unable to load your profile</h2>
 
           <p className="text-sm text-muted-foreground">
             {error instanceof Error
               ? error.message
-              : "Please try again."}
+              : "Something went wrong. Please try again."}
           </p>
 
-          <Button onClick={() => refetch()} variant="outline">
+          <Button onClick={() => void refetch()} variant="outline">
             Try Again
           </Button>
         </CardContent>
@@ -167,38 +159,40 @@ export default function UserProfile() {
     );
   }
 
-  const formatDate = (date: string) =>
-    new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-
-  const initials =
-    user.name
-      ?.trim()
-      .split(/\s+/)
-      .map((word) => word.charAt(0))
-      .slice(0, 2)
-      .join("")
-      .toUpperCase() || "U";
+  const joinedDate = formatDate(user.createdAt);
+  const updatedDate = formatDate(user.updatedAt);
+  const initials = getInitials(user.name);
 
   return (
-    <div className="space-y-6">
+    <main className="min-h-screen space-y-6 bg-background text-foreground">
+      {/* Page heading */}
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          My Profile
+        </h1>
+
+        <p className="mt-1 text-sm text-muted-foreground">
+          Manage your personal information and account details.
+        </p>
+      </div>
+
       {/* Profile Header */}
-      <Card>
-        <CardContent className="p-6">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-            {/* Profile Image */}
-            <div className="relative h-24 w-24 shrink-0">
-              <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border bg-primary/10 text-2xl font-bold text-primary">
+      <Card className="overflow-hidden border-border bg-card text-card-foreground">
+        <div className="h-28 bg-primary/10 sm:h-36" />
+
+        <CardContent className="-mt-12 p-6 sm:-mt-14">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end">
+            {/* Avatar */}
+            <div className="relative size-24 shrink-0 sm:size-28">
+              <div className="flex size-24 items-center justify-center overflow-hidden rounded-full border-4 border-card bg-primary/10 text-2xl font-bold text-primary sm:size-28">
                 {user.imageUrl ? (
                   <Image
                     src={user.imageUrl}
                     alt={user.name}
-                    width={200}
-                    height={200}
-                    className="h-full w-full object-cover"
+                    width={224}
+                    height={224}
+                    className="size-full object-cover"
+                    unoptimized
                   />
                 ) : (
                   initials
@@ -206,6 +200,7 @@ export default function UserProfile() {
               </div>
 
               <UpdateProfileImage
+        
                 imageUrl={user.imageUrl}
                 userName={user.name}
                 onSubmit={handleUpdateProfileImage}
@@ -213,45 +208,49 @@ export default function UserProfile() {
               />
 
               {updateProfileImageMutation.isPending && (
-                <div className="absolute inset-0 flex items-center justify-center rounded-full bg-background/80 text-xs font-medium text-foreground">
+                <div className="absolute inset-0 flex items-center justify-center rounded-full bg-background/80 text-xs font-medium">
                   Uploading...
                 </div>
               )}
             </div>
 
-            {/* User Information */}
+            {/* User information */}
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-2xl font-bold tracking-tight text-foreground">
+                <h2 className="break-words text-xl font-bold sm:text-2xl">
                   {user.name}
-                </h1>
+                </h2>
 
-                <Badge variant="secondary">{user.role}</Badge>
+                <Badge variant="outline">{user.role}</Badge>
 
-                <Badge
-                  variant={
-                    user.status === "ACTIVE" ? "default" : "secondary"
-                  }
-                >
+                <Badge variant={getStatusVariant(user.status)}>
                   {user.status === "ACTIVE" && (
-                    <CheckCircle2 className="mr-1 h-3.5 w-3.5" />
+                    <CheckCircle2 className="mr-1 size-3.5" />
                   )}
                   {user.status}
                 </Badge>
+
+                {user.isDeleted && <Badge variant="destructive">Deleted</Badge>}
               </div>
 
               <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4 shrink-0" />
+                <Mail className="size-4 shrink-0" />
                 <span className="break-all">{user.email}</span>
               </p>
 
               <p className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                <CalendarDays className="h-4 w-4 shrink-0" />
-                Member since {formatDate(user.createdAt)}
+                <CalendarDays className="size-4 shrink-0" />
+                Member since {joinedDate}
               </p>
+
+              {user.bio && (
+                <p className="mt-3 max-w-2xl whitespace-pre-wrap text-sm leading-6 text-muted-foreground">
+                  {user.bio}
+                </p>
+              )}
             </div>
 
-            {/* Edit Profile */}
+            {/* Edit profile */}
             <div className="shrink-0">
               <EditProfileDialog
                 user={user}
@@ -263,36 +262,115 @@ export default function UserProfile() {
         </CardContent>
       </Card>
 
+      {/* Information Cards */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Personal Information */}
-        <Card>
+        <Card className="border-border bg-card text-card-foreground">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <UserRound className="h-5 w-5 text-primary" />
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <UserRound className="size-5 text-primary" />
               Personal Information
             </CardTitle>
           </CardHeader>
 
           <CardContent className="space-y-5">
+            <ProfileItem icon={UserRound} label="Full Name" value={user.name} />
+
+            <Separator />
+
+            <ProfileItem icon={Mail} label="Email Address" value={user.email} />
+
+            <Separator />
+
             <ProfileItem
-              icon={UserRound}
-              label="Full Name"
-              value={user.name}
+              icon={Phone}
+              label="Phone Number"
+              value={user.phone || "Not provided"}
             />
+
+            <Separator />
+
+            <ProfileItem
+              icon={FileText}
+              label="Bio"
+              value={user.bio || "No bio added yet"}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Location Information */}
+        <Card className="border-border bg-card text-card-foreground">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <MapPin className="size-5 text-primary" />
+              Location Information
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="space-y-5">
+            <ProfileItem
+              icon={Globe}
+              label="Country"
+              value={user.country || "Not provided"}
+            />
+
+            <Separator />
+
+            <ProfileItem
+              icon={MapPin}
+              label="City"
+              value={user.city || "Not provided"}
+            />
+
+            <Separator />
+
+            <ProfileItem
+              icon={MapPin}
+              label="Address"
+              value={user.address || "Not provided"}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Social Profiles */}
+        <Card className="border-border bg-card text-card-foreground">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Globe className="size-5 text-primary" />
+              Social Profiles
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="space-y-5">
+            <ProfileItem
+              icon={Mail}
+              label="GitHub"
+              value={user.githubUrl || "Not provided"}
+            />
+
+            <Separator />
 
             <ProfileItem
               icon={Mail}
-              label="Email Address"
-              value={user.email}
+              label="LinkedIn"
+              value={user.linkedinUrl || "Not provided"}
+            />
+
+            <Separator />
+
+            <ProfileItem
+              icon={Globe}
+              label="Portfolio"
+              value={user.portfolioUrl || "Not provided"}
             />
           </CardContent>
         </Card>
 
         {/* Account Information */}
-        <Card>
+        <Card className="border-border bg-card text-card-foreground">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <ShieldCheck className="h-5 w-5 text-primary" />
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <ShieldCheck className="size-5 text-primary" />
               Account Information
             </CardTitle>
           </CardHeader>
@@ -304,74 +382,32 @@ export default function UserProfile() {
               value={user.role}
             />
 
+            <Separator />
+
             <ProfileItem
               icon={CheckCircle2}
               label="Account Status"
               value={user.status}
             />
 
-            <ProfileItem
-              icon={ShieldCheck}
-              label="Account Deleted"
-              value={user.isDeleted ? "Yes" : "No"}
-            />
-          </CardContent>
-        </Card>
+            <Separator />
 
-        {/* Account Activity */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CalendarDays className="h-5 w-5 text-primary" />
-              Account Activity
-            </CardTitle>
-          </CardHeader>
-
-          <CardContent className="grid gap-5 sm:grid-cols-2">
             <ProfileItem
               icon={CalendarDays}
               label="Member Since"
-              value={formatDate(user.createdAt)}
+              value={joinedDate}
             />
 
+            <Separator />
+
             <ProfileItem
-              icon={CalendarDays}
+              icon={Clock3}
               label="Last Updated"
-              value={formatDate(user.updatedAt)}
+              value={updatedDate}
             />
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
-}
-
-type ProfileItemProps = {
-  icon: React.ElementType;
-  label: string;
-  value: string;
-};
-
-function ProfileItem({
-  icon: Icon,
-  label,
-  value,
-}: ProfileItemProps) {
-  return (
-    <div className="flex items-start gap-3">
-      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
-        <Icon className="h-4 w-4" />
-      </div>
-
-      <div className="min-w-0 flex-1">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          {label}
-        </p>
-
-        <p className="mt-1 break-words text-sm font-medium text-foreground">
-          {value}
-        </p>
-      </div>
-    </div>
+    </main>
   );
 }

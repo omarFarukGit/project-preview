@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -24,28 +23,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-
-const updateProfileSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be less than 50 characters"),
-});
-
-export type UpdateProfileFormValues = z.infer<
-  typeof updateProfileSchema
->;
-
-interface UserProfile {
-  name: string;
-}
-
-interface EditProfileDialogProps {
-  user: UserProfile;
-  isPending?: boolean;
-  onSubmit: (data: UpdateProfileFormValues) => Promise<void>;
-}
+import { EditProfileDialogProps, profileFields } from "@/types/user.types";
+import { updateProfileSchema } from "@/validation/user.validation";
 
 export default function EditProfileDialog({
   user,
@@ -53,95 +32,127 @@ export default function EditProfileDialog({
   onSubmit,
 }: EditProfileDialogProps) {
   const [open, setOpen] = useState(false);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
 
   const form = useForm({
     defaultValues: {
       name: user.name ?? "",
+      bio: user.bio ?? "",
+      phone: user.phone ?? "",
+      country: user.country ?? "",
+      city: user.city ?? "",
+      address: user.address ?? "",
+      githubUrl: user.githubUrl ?? "",
+      linkedinUrl: user.linkedinUrl ?? "",
+      portfolioUrl: user.portfolioUrl ?? "",
     },
 
     validators: {
+      onChange: updateProfileSchema,
+      onBlur: updateProfileSchema,
       onSubmit: updateProfileSchema,
     },
 
     onSubmit: async ({ value }) => {
-      try {
-        await onSubmit(value);
-        setOpen(false);
-      } catch {
-        // Keep the dialog open if the API request fails.
-      }
+      await onSubmit({
+        name: value.name.trim(),
+        bio: value.bio.trim(),
+        phone: value.phone.trim(),
+        country: value.country.trim(),
+        city: value.city.trim(),
+        address: value.address.trim(),
+        githubUrl: value.githubUrl.trim(),
+        linkedinUrl: value.linkedinUrl.trim(),
+        portfolioUrl: value.portfolioUrl.trim(),
+      });
+
+      setOpen(false);
     },
   });
 
   useEffect(() => {
     if (open) {
+      setSubmitAttempted(false);
+
       form.reset();
     }
   }, [open, form]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!isPending) {
+          setOpen(nextOpen);
+        }
+      }}
+    >
       <DialogTrigger>
-        <Button variant="outline" size="sm">
+        <Button className={'cursor-pointer'} type="button" variant="outline" size="sm" disabled={isPending}>
           <Pencil className="mr-2 size-4" />
           Edit Profile
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
+
           <DialogDescription>
-            Update your ProjectReview profile information.
+            Update your personal information and social profiles.
           </DialogDescription>
         </DialogHeader>
 
         <form
+          noValidate
           onSubmit={(event) => {
             event.preventDefault();
             event.stopPropagation();
+
+            setSubmitAttempted(true);
+
             void form.handleSubmit();
           }}
         >
           <FieldGroup>
-            <form.Field name="name">
-              {(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched &&
-                  !field.state.meta.isValid;
+            {profileFields.map((item) => (
+              <form.Field key={item.name} name={item.name}>
+                {(field) => {
+                  const isInvalid =
+                    (field.state.meta.isTouched || submitAttempted) &&
+                    field.state.meta.errors.length > 0;
 
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Full Name
-                    </FieldLabel>
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>{item.label}</FieldLabel>
 
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onChange={(event) =>
-                        field.handleChange(event.target.value)
-                      }
-                      onBlur={field.handleBlur}
-                      placeholder="Enter your full name"
-                      autoComplete="name"
-                      maxLength={50}
-                      disabled={isPending}
-                      aria-invalid={isInvalid}
-                    />
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onChange={(event) =>
+                          field.handleChange(event.target.value)
+                        }
+                        onBlur={field.handleBlur}
+                        placeholder={item.placeholder}
+                        maxLength={item.maxLength}
+                        disabled={isPending}
+                        aria-invalid={isInvalid}
+                      />
 
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            </form.Field>
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
+            ))}
           </FieldGroup>
 
           <DialogFooter className="mt-6">
             <Button
+            className={ 'cursor-pointer'}
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
@@ -150,7 +161,7 @@ export default function EditProfileDialog({
               Cancel
             </Button>
 
-            <Button type="submit" disabled={isPending}>
+            <Button className={' cursor-pointer'} type="submit" disabled={isPending}>
               {isPending ? (
                 <>
                   <Spinner />

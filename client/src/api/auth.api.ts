@@ -16,7 +16,6 @@ export function getMe() {
   return apiClient("/users/me");
 }
 
-
 export function updateMyProfileInfromation(payload: any) {
   return apiClient("/users/me", {
     method: "PATCH",
@@ -29,5 +28,3 @@ export function updateMyProfileImage(payload: any) {
     body: payload,
   });
 }
-
-
