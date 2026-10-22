@@ -1,19 +1,28 @@
-import { LoaderIcon } from "lucide-react";
-import React from "react";
+"use client";
+import React, { ReactNode, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import AuthLoading from "./auth-loading";
+import { useGetMe } from "@/hooks/auth.hook";
 
-export default function AuthLoading({
-  lavel = "Vefifying Account",
-}: {
-  lavel?: string;
-}) {
-  return (
-    <div className=" w-full h-screen flex justify-center items-center">
-      <div className=" flex flex-col gap-5 justify-center items-center">
-        <p> {lavel}</p>
-        <div>
-          <LoaderIcon className=" size-6 animate-spin"></LoaderIcon>
-        </div>
-      </div>
-    </div>
-  );
+export default function AuthGuard({ children }: { children: ReactNode }) {
+  const { data, isPending, isError } = useGetMe();
+  const router = useRouter();
+  const user = data?.data;
+  useEffect(() => {
+    if (isPending) {
+      return;
+    }
+    if (isError || !user) {
+      router.replace("/login");
+    }
+  }, [isPending, isError, user, router.replace]);
+
+  if (isPending) {
+    return <AuthLoading label="Vefifying Account" />;
+  }
+  if (isError || !user) {
+    return <AuthLoading label="Redirecting..." />;
+  }
+
+  return <div>{children}</div>;
 }

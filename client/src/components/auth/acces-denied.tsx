@@ -1,11 +1,16 @@
-'use client'
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Home, ShieldAlert } from "lucide-react";
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Home, ShieldAlert } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 export default function AccessDenied() {
+  const router = useRouter();
+
   return (
-    <main className="relative flex min-h-[70vh] items-center justify-center overflow-hidden bg-background px-4 py-12 sm:px-6 lg:px-8">
+    <main className="relative flex min-h-[100vh] items-center justify-center overflow-hidden bg-background px-4 py-12 sm:px-6 lg:px-8">
       {/* Background Decoration */}
       <div className="pointer-events-none absolute -left-24 -top-24 size-64 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 size-64 rounded-full bg-primary/10 blur-3xl" />
@@ -31,16 +36,16 @@ export default function AccessDenied() {
 
           <p className="mx-auto max-w-sm text-sm leading-6 text-muted-foreground sm:text-base">
             You don&apos;t have permission to access this page. Please return
-            to the home page or go back and try another page.
+            to your dashboard or go back and try another page.
           </p>
         </div>
 
         {/* Actions */}
-        <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+        <div className="mt-7 flex flex-row justify-center gap-3 ">
           <Button
-            className="h-11 rounded-xl px-5"
+            className="h-11 cursor-pointer rounded-xl px-5"
           >
-            <Link href="/">
+            <Link href="/" className=" flex justify-center items-center">
               <Home className="mr-2 size-4" />
               Go to Home
             </Link>
@@ -49,8 +54,8 @@ export default function AccessDenied() {
           <Button
             type="button"
             variant="outline"
-            className="h-11 rounded-xl px-5"
-            onClick={() => window.history.back()}
+            className="h-11 cursor-pointer rounded-xl px-5"
+            onClick={() => router.back()}
           >
             <ArrowLeft className="mr-2 size-4" />
             Go Back
