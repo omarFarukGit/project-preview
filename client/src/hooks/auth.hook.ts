@@ -1,4 +1,4 @@
-import { getMe, userLogin, userLogout } from "@/api";
+import { getMe, updateMyProfileImage, updateMyProfileInfromation, userLogin, userLogout } from "@/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useLogin() {
@@ -18,5 +18,17 @@ export function useGetMe() {
     queryKey: ["user"],
     queryFn: getMe,
     retry: false,
+  });
+}
+
+export function useUpdateMyProfileInformation() {
+  return useMutation({
+    mutationFn: updateMyProfileInfromation,
+  });
+}
+
+export function useUpdateMyProfileImage() {
+  return useMutation({
+    mutationFn: updateMyProfileImage,
   });
 }

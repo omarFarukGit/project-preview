@@ -15,3 +15,19 @@ export function userLogout() {
 export function getMe() {
   return apiClient("/users/me");
 }
+
+
+export function updateMyProfileInfromation(payload: any) {
+  return apiClient("/users/me", {
+    method: "PATCH",
+    body: payload,
+  });
+}
+export function updateMyProfileImage(payload: any) {
+  return apiClient("/users/me/image", {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+
