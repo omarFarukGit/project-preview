@@ -24,3 +24,5 @@ export type TLoginPayload = {
   email: string;
   password: string;
 };
+
+export type UserRole = "ADMIN" | "MENTOR" | "STUDENT";
