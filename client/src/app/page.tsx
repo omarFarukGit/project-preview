@@ -1,6 +1,3 @@
-
 export default function Home() {
-  return (
-    <div>Project Review </div>
-  );
+  return <div>Project Review </div>;
 }
