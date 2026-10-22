@@ -7,3 +7,11 @@ export function userLogin(payload: TLoginPayload) {
     body: payload,
   });
 }
+
+export function userLogout() {
+  return apiClient("/auth/logout", { method: "POST" });
+}
+
+export function getMe() {
+  return apiClient("/users/me");
+}
