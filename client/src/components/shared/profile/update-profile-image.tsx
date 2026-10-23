@@ -152,7 +152,6 @@ export default function UpdateProfileImage({
 
             {file && (
               <Button
-              
                 type="button"
                 size="icon"
                 variant="destructive"
@@ -192,14 +191,19 @@ export default function UpdateProfileImage({
 
         <DialogFooter>
           <DialogClose>
-            <Button  className={'cursor-pointer'} type="button" variant="outline" disabled={isPending}>
+            <Button
+              className={"cursor-pointer"}
+              type="button"
+              variant="outline"
+              disabled={isPending}
+            >
               Cancel
             </Button>
           </DialogClose>
 
           <Button
             type="button"
-            className={'cursor-pointer'}
+            className={"cursor-pointer"}
             onClick={handleSubmit}
             disabled={!file || isPending}
           >

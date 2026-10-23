@@ -23,7 +23,7 @@ export default function DashboardShell({
         <header className=" flex z-50 sticky top-0 h-16 shrink-0 items-center justify-between gap-2 border-b px-4 bg-white  dark:bg-background/70 backdrop-blur-xl">
           <SidebarTrigger className="-ml-1 cursor-pointer" />
           <div className=" flex justify-center items-center gap-4">
-            <ModeToggle/>
+            <ModeToggle />
             <Logout />
           </div>
         </header>

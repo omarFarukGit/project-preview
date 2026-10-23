@@ -200,7 +200,6 @@ export default function UserProfile() {
               </div>
 
               <UpdateProfileImage
-        
                 imageUrl={user.imageUrl}
                 userName={user.name}
                 onSubmit={handleUpdateProfileImage}

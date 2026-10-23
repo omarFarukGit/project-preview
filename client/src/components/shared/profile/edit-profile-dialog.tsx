@@ -88,7 +88,13 @@ export default function EditProfileDialog({
       }}
     >
       <DialogTrigger>
-        <Button className={'cursor-pointer'} type="button" variant="outline" size="sm" disabled={isPending}>
+        <Button
+          className={"cursor-pointer"}
+          type="button"
+          variant="outline"
+          size="sm"
+          disabled={isPending}
+        >
           <Pencil className="mr-2 size-4" />
           Edit Profile
         </Button>
@@ -152,7 +158,7 @@ export default function EditProfileDialog({
 
           <DialogFooter className="mt-6">
             <Button
-            className={ 'cursor-pointer'}
+              className={"cursor-pointer"}
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
@@ -161,7 +167,11 @@ export default function EditProfileDialog({
               Cancel
             </Button>
 
-            <Button className={' cursor-pointer'} type="submit" disabled={isPending}>
+            <Button
+              className={" cursor-pointer"}
+              type="submit"
+              disabled={isPending}
+            >
               {isPending ? (
                 <>
                   <Spinner />

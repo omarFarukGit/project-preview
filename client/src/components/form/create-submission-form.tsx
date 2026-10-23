@@ -1,8 +1,7 @@
-
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import {  ExternalLink, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -29,20 +28,17 @@ import { createSubmissionSchema } from "@/validation/submissions.validation";
 import { FaGithub } from "react-icons/fa";
 import { TbWorldUp } from "react-icons/tb";
 
-
 export function CreateSubmissionForm() {
   const router = useRouter();
 
-  const { mutate: createSubmission, isPending } =
-    useCreateSubmissions();
+  const { mutate: createSubmission, isPending } = useCreateSubmissions();
 
   const form = useForm({
     defaultValues: {
       projectName: "",
       repoUrl: "",
       liveUrl: "",
-      description:
-        "",
+      description: "",
     },
 
     validators: {
@@ -55,37 +51,36 @@ export function CreateSubmissionForm() {
           if (res.success) {
             toast.add({
               title: "Submission Created",
-              description:
-                "Your project has been submitted successfully.",
+              description: "Your project has been submitted successfully.",
               type: "success",
             });
 
-            router.push("/dashboard/submissions");
+            router.push("/student-dashboard/submissions");
           }
         },
-onError: (error) => {
-  const apiError = error as {
-    data?: { message?: string };
-    response?: {
-      _data?: { message?: string };
-      data?: { message?: string };
-    };
-    message?: string;
-  };
+        onError: (error) => {
+          const apiError = error as {
+            data?: { message?: string };
+            response?: {
+              _data?: { message?: string };
+              data?: { message?: string };
+            };
+            message?: string;
+          };
 
-  const message =
-    apiError.data?.message ??
-    apiError.response?._data?.message ??
-    apiError.response?.data?.message ??
-    apiError.message ??
-    "Unable to create submission.";
+          const message =
+            apiError.data?.message ??
+            apiError.response?._data?.message ??
+            apiError.response?.data?.message ??
+            apiError.message ??
+            "Unable to create submission.";
 
-  toast.add({
-    title: "Submission Failed",
-    description: message,
-    type: "error",
-  });
-},
+          toast.add({
+            title: "Submission Failed",
+            description: message,
+            type: "error",
+          });
+        },
       });
     },
   });
@@ -96,8 +91,8 @@ onError: (error) => {
         <CardTitle>Create Submission</CardTitle>
 
         <CardDescription>
-          Submit your project for review. Provide your project details,
-          GitHub repository, and live URL.
+          Submit your project for review. Provide your project details, GitHub
+          repository, and live URL.
         </CardDescription>
       </CardHeader>
 
@@ -114,23 +109,18 @@ onError: (error) => {
             <form.Field name="projectName">
               {(field) => {
                 const isInvalid =
-                  field.state.meta.isTouched &&
-                  !field.state.meta.isValid;
+                  field.state.meta.isTouched && !field.state.meta.isValid;
 
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Project Name
-                    </FieldLabel>
+                    <FieldLabel htmlFor={field.name}>Project Name</FieldLabel>
 
                     <Input
                       id={field.name}
                       name={field.name}
                       placeholder="e.g. RentNest"
                       value={field.state.value}
-                      onChange={(e) =>
-                        field.handleChange(e.target.value)
-                      }
+                      onChange={(e) => field.handleChange(e.target.value)}
                       onBlur={field.handleBlur}
                       aria-invalid={isInvalid}
                     />
@@ -151,8 +141,7 @@ onError: (error) => {
             <form.Field name="repoUrl">
               {(field) => {
                 const isInvalid =
-                  field.state.meta.isTouched &&
-                  !field.state.meta.isValid;
+                  field.state.meta.isTouched && !field.state.meta.isValid;
 
                 return (
                   <Field data-invalid={isInvalid}>
@@ -167,9 +156,7 @@ onError: (error) => {
                       type="url"
                       placeholder="https://github.com/username/repository"
                       value={field.state.value}
-                      onChange={(e) =>
-                        field.handleChange(e.target.value)
-                      }
+                      onChange={(e) => field.handleChange(e.target.value)}
                       onBlur={field.handleBlur}
                       aria-invalid={isInvalid}
                     />
@@ -190,13 +177,12 @@ onError: (error) => {
             <form.Field name="liveUrl">
               {(field) => {
                 const isInvalid =
-                  field.state.meta.isTouched &&
-                  !field.state.meta.isValid;
+                  field.state.meta.isTouched && !field.state.meta.isValid;
 
                 return (
                   <Field data-invalid={isInvalid}>
                     <FieldLabel htmlFor={field.name}>
-                      <TbWorldUp  className="mr-2 inline size-4" />
+                      <TbWorldUp className="mr-2 inline size-4" />
                       Live Project URL
                     </FieldLabel>
 
@@ -206,9 +192,7 @@ onError: (error) => {
                       type="url"
                       placeholder="https://your-project.vercel.app"
                       value={field.state.value}
-                      onChange={(e) =>
-                        field.handleChange(e.target.value)
-                      }
+                      onChange={(e) => field.handleChange(e.target.value)}
                       onBlur={field.handleBlur}
                       aria-invalid={isInvalid}
                     />
@@ -229,8 +213,7 @@ onError: (error) => {
             <form.Field name="description">
               {(field) => {
                 const isInvalid =
-                  field.state.meta.isTouched &&
-                  !field.state.meta.isValid;
+                  field.state.meta.isTouched && !field.state.meta.isValid;
 
                 return (
                   <Field data-invalid={isInvalid}>
@@ -244,9 +227,7 @@ onError: (error) => {
                       placeholder="Describe your project, features, and user roles..."
                       rows={6}
                       value={field.state.value}
-                      onChange={(e) =>
-                        field.handleChange(e.target.value)
-                      }
+                      onChange={(e) => field.handleChange(e.target.value)}
                       onBlur={field.handleBlur}
                       aria-invalid={isInvalid}
                       className="min-h-32 resize-y"
@@ -270,7 +251,6 @@ onError: (error) => {
                 disabled={isPending}
                 type="submit"
                 className="w-full cursor-pointer"
-
               >
                 {isPending ? (
                   <>
@@ -286,8 +266,8 @@ onError: (error) => {
               </Button>
 
               <FieldDescription className="text-center">
-                Please verify that your repository and live project
-                URLs are correct before submitting.
+                Please verify that your repository and live project URLs are
+                correct before submitting.
               </FieldDescription>
             </Field>
           </FieldGroup>

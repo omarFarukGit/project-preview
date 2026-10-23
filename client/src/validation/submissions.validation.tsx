@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 
 export const createSubmissionSchema = z
@@ -53,6 +52,4 @@ export const createSubmissionSchema = z
   })
   .strict();
 
-export type CreateSubmissionInput = z.infer<
-  typeof createSubmissionSchema
->;
+export type CreateSubmissionInput = z.infer<typeof createSubmissionSchema>;

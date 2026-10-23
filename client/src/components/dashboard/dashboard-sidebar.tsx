@@ -33,11 +33,7 @@ const sidebarRoutes: Record<
   STUDENT: studentRoutes,
 };
 
-export function DashboardSidebar({
-  role,
-}: {
-  role: UserRole;
-}) {
+export function DashboardSidebar({ role }: { role: UserRole }) {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();
 
@@ -49,11 +45,7 @@ export function DashboardSidebar({
   const activeRoute =
     allItems.find((item) => pathname === item.url) ??
     allItems
-      .filter(
-        (item) =>
-          item.url !== "/" &&
-          pathname.startsWith(`${item.url}/`),
-      )
+      .filter((item) => item.url !== "/" && pathname.startsWith(`${item.url}/`))
       .sort((a, b) => b.url.length - a.url.length)[0];
 
   return (
@@ -84,9 +76,7 @@ export function DashboardSidebar({
       <SidebarContent>
         {routes.map((group) => (
           <SidebarGroup key={group.title}>
-            <SidebarGroupLabel>
-              {group.title}
-            </SidebarGroupLabel>
+            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
 
             <SidebarGroupContent>
               <SidebarMenu>
@@ -102,9 +92,7 @@ export function DashboardSidebar({
                       >
                         <Link
                           href={item.url}
-                          aria-current={
-                            isActive ? "page" : undefined
-                          }
+                          aria-current={isActive ? "page" : undefined}
                           onClick={() => setOpenMobile(false)}
                         >
                           {item.title}
