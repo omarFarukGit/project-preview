@@ -79,8 +79,8 @@ export default function MySubmissionsPage() {
 
   const { data, isLoading, isFetching, isError } = useGetMySubmissions(params);
 
-  const submissions = data?.data?.data ?? [];
-  const meta = data?.data?.meta;
+  const submissions = data?.data ?? [];
+  const meta = data?.meta;
 
   function handleStatusChange(value: string | null) {
     if (value === null) return;
