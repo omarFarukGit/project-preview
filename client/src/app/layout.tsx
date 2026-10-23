@@ -18,7 +18,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col container mx-auto space-y-6 px-4 py-8">
+        
         <Providers>
           {children}
           <Toaster />

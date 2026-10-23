@@ -75,7 +75,7 @@ export function Navbar() {
               setMobileOpen(false);
               router.push("/login");
             }}
-            className="font-medium"
+            className="font-medium cursor-pointer"
           >
             Login
           </Button>
@@ -84,7 +84,7 @@ export function Navbar() {
               setMobileOpen(false);
               router.push("/register");
             }}
-            className="bg-primary font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+            className="bg-primary font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
           >
             Get Started <ArrowRight className="ml-1 size-4" />
           </Button>
