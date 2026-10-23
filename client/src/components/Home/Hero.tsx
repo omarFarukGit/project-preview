@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -16,34 +17,38 @@ export function HeroSection() {
     <section className="relative isolate overflow-hidden bg-background">
       {/* Decorative background */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -right-32 -top-32 size-96 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-32 size-96 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-20 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
+        <div className="absolute -right-24 -top-24 size-64 rounded-full bg-primary/10 blur-3xl sm:-right-32 sm:-top-32 sm:size-96" />
+        <div className="absolute -bottom-32 -left-24 size-64 rounded-full bg-primary/5 blur-3xl sm:-bottom-40 sm:-left-32 sm:size-96" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:32px_32px] opacity-20 [mask-image:linear-gradient(to_bottom,black,transparent_85%)] sm:bg-[size:48px_48px]" />
       </div>
 
-      <div className="mx-auto grid min-h-[620px] max-w-7xl items-center gap-14 px-4 py-20 sm:px-6 md:py-24 lg:grid-cols-2 lg:px-8">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-12 sm:gap-12 sm:px-6 sm:py-16 md:py-20 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-24">
         {/* Hero content */}
-        <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-medium text-primary">
-            <Sparkles className="size-4" />A Better Way to Showcase Your Work
+        <div className="mx-auto w-full min-w-0 max-w-2xl text-center lg:mx-0 lg:text-left">
+          <div className="mb-5 inline-flex max-w-full items-center justify-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-2 text-xs font-medium text-primary sm:mb-7 sm:px-4 sm:text-sm">
+            <Sparkles className="size-3.5 shrink-0 sm:size-4" />
+            <span>A Better Way to Showcase Your Work</span>
           </div>
 
-          <h1 className="text-4xl leading-[1.12] font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+          <h1 className="text-3xl leading-tight font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
             Build Projects.
-            <span className="mt-2 block text-primary">Get Feedback.</span>
+            <span className="mt-1 block text-primary sm:mt-2">
+              Get Feedback.
+            </span>
             Grow Your Skills.
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg lg:mx-0">
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-foreground sm:mt-6 sm:text-base sm:leading-7 md:text-lg lg:mx-0">
             Submit your projects, receive meaningful feedback from mentors, and
             track your progress — all in one place.
           </p>
 
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+          {/* CTA buttons */}
+          <div className="mt-6 flex flex-col justify-center gap-3 sm:mt-9 sm:flex-row lg:justify-start">
             <Button
               nativeButton={false}
               size="lg"
-              className="h-12 rounded-xl px-6 font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="h-11 w-full rounded-xl px-5 font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:h-12 sm:w-auto sm:px-6"
               render={<Link href="/register" />}
             >
               Get Started
@@ -54,49 +59,52 @@ export function HeroSection() {
               nativeButton={false}
               size="lg"
               variant="outline"
-              className="h-12 rounded-xl border-border bg-background/70 px-6"
+              className="h-11 w-full rounded-xl border-border bg-background/70 px-4 sm:h-12 sm:w-auto sm:px-6"
               render={<Link href="/how-it-works" />}
             >
-              <Code2 className="mr-1 size-4" />
+              <Code2 className="mr-1 size-4 shrink-0" />
               Explore How It Works
             </Button>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-sm text-muted-foreground lg:justify-start">
+          {/* Benefits */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-3 text-xs text-muted-foreground sm:mt-8 sm:gap-x-5 sm:text-sm lg:justify-start">
             <span className="inline-flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-primary" />
+              <CheckCircle2 className="size-4 shrink-0 text-primary" />
               Easy submissions
             </span>
+
             <span className="inline-flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-primary" />
+              <CheckCircle2 className="size-4 shrink-0 text-primary" />
               Mentor feedback
             </span>
           </div>
         </div>
 
         {/* Dashboard preview */}
-        <div className="relative mx-auto w-full max-w-xl lg:ml-auto">
-          <div className="absolute -inset-5 rounded-[2rem] bg-primary/10 blur-2xl" />
+        <div className="relative mx-auto w-full min-w-0 max-w-xl lg:ml-auto">
+          <div className="absolute -inset-3 rounded-[1.5rem] bg-primary/10 blur-2xl sm:-inset-5 sm:rounded-[2rem]" />
 
-          <div className="relative rounded-2xl border border-border/80 bg-card p-4 shadow-2xl shadow-slate-950/5 sm:p-6">
+          <div className="relative min-w-0 rounded-2xl border border-border/80 bg-card p-3 shadow-2xl shadow-slate-950/5 sm:p-5 md:p-6">
             {/* Preview header */}
-            <div className="flex items-center justify-between border-b border-border pb-5">
-              <div>
-                <p className="text-xs font-medium text-muted-foreground">
+            <div className="flex min-w-0 items-center justify-between gap-3 border-b border-border pb-4 sm:pb-5">
+              <div className="min-w-0">
+                <p className="text-[10px] font-medium tracking-wide text-muted-foreground sm:text-xs">
                   STUDENT WORKSPACE
                 </p>
-                <h2 className="mt-1 text-lg font-semibold text-card-foreground">
+
+                <h2 className="mt-1 text-base font-semibold text-card-foreground sm:text-lg">
                   My Submissions
                 </h2>
               </div>
 
-              <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <FileCheck2 className="size-5" />
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary sm:size-10 sm:rounded-xl">
+                <FileCheck2 className="size-4 sm:size-5" />
               </div>
             </div>
 
             {/* Summary cards */}
-            <div className="mt-5 grid grid-cols-3 gap-3">
+            <div className="mt-4 grid grid-cols-3 gap-2 sm:mt-5 sm:gap-3">
               {[
                 { label: "Total", value: "03" },
                 { label: "Pending", value: "01" },
@@ -104,43 +112,48 @@ export function HeroSection() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-xl border border-border/70 bg-background p-3 sm:p-4"
+                  className="min-w-0 rounded-lg border border-border/70 bg-background p-2.5 sm:rounded-xl sm:p-4"
                 >
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
-                  <p className="mt-2 text-2xl font-bold tracking-tight text-foreground">
+                  <p className="truncate text-[10px] text-muted-foreground sm:text-xs">
+                    {stat.label}
+                  </p>
+
+                  <p className="mt-1 text-xl font-bold tracking-tight text-foreground sm:mt-2 sm:text-2xl">
                     {stat.value}
                   </p>
                 </div>
               ))}
             </div>
 
-            {/* Example project */}
-            <div className="mt-5 rounded-xl border border-border/70 p-4">
-              <div className="flex items-start gap-3">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <Code2 className="size-5" />
+            {/* Approved project */}
+            <div className="mt-4 min-w-0 rounded-xl border border-border/70 p-3 sm:mt-5 sm:p-4">
+              <div className="flex min-w-0 items-start gap-2.5 sm:gap-3">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary sm:size-11 sm:rounded-xl">
+                  <Code2 className="size-4 sm:size-5" />
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <h3 className="truncate font-semibold text-card-foreground">
+                  <h3 className="truncate text-sm font-semibold text-card-foreground sm:text-base">
                     E-commerce Web Application
                   </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
+
+                  <p className="mt-1 break-words text-[11px] text-muted-foreground sm:text-sm">
                     React · TypeScript · Node.js
                   </p>
                 </div>
 
-                <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
-                  <CheckCircle2 className="size-3.5" />
+                <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-medium text-primary sm:gap-1.5 sm:px-2.5 sm:text-xs">
+                  <CheckCircle2 className="size-3 sm:size-3.5" />
                   Approved
                 </span>
               </div>
 
-              <div className="mt-4 border-t border-border pt-3">
-                <p className="text-xs leading-5 text-muted-foreground">
+              <div className="mt-3 border-t border-border pt-3 sm:mt-4">
+                <p className="text-[11px] leading-5 text-muted-foreground sm:text-xs">
                   Mentor feedback
                 </p>
-                <p className="mt-1 text-sm leading-6 text-card-foreground">
+
+                <p className="mt-1 text-xs leading-5 text-card-foreground sm:text-sm sm:leading-6">
                   Great structure and a clear user experience. Keep improving
                   your project documentation.
                 </p>
@@ -148,24 +161,27 @@ export function HeroSection() {
             </div>
 
             {/* Pending project */}
-            <div className="mt-3 flex items-center gap-3 rounded-xl border border-border/70 bg-background p-4">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                <Clock3 className="size-5" />
+            <div className="mt-3 flex min-w-0 items-center gap-2.5 rounded-xl border border-border/70 bg-background p-3 sm:gap-3 sm:p-4">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 sm:size-10 sm:rounded-xl">
+                <Clock3 className="size-4 sm:size-5" />
               </div>
+
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold text-foreground">
+                <p className="truncate text-xs font-semibold text-foreground sm:text-sm">
                   Task Management App
                 </p>
-                <p className="mt-1 text-xs text-muted-foreground">
+
+                <p className="mt-1 text-[10px] text-muted-foreground sm:text-xs">
                   Submitted for review
                 </p>
               </div>
-              <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-700 dark:text-amber-300">
+
+              <span className="shrink-0 rounded-full bg-amber-500/10 px-2 py-1 text-[10px] font-medium text-amber-700 dark:text-amber-300 sm:px-2.5 sm:text-xs">
                 Pending
               </span>
             </div>
 
-            <p className="mt-4 text-center text-xs text-muted-foreground">
+            <p className="mt-3 text-center text-[10px] text-muted-foreground sm:mt-4 sm:text-xs">
               Your projects. Your progress. One workspace.
             </p>
           </div>
