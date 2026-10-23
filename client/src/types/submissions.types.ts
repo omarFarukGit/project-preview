@@ -48,3 +48,31 @@ export interface SubmissionsTableProps {
   handlePageChange: Dispatch<SetStateAction<number>>;
   searchTerm: string;
 }
+
+export interface SubmissionDetails extends Submission {
+  normalizedRepoUrl?: string;
+  updatedAt?: string;
+  student?: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  reviewedBy?: {
+    id: string;
+    name: string;
+  } | null;
+  feedbacks?: {
+    id: string;
+    comment: string;
+    createdAt: string;
+    updatedAt?: string;
+    mentor?: {
+      id: string;
+      name: string;
+    };
+  }[];
+}
+
+export interface SubmissionProjectCardProps {
+  submission: SubmissionDetails;
+}

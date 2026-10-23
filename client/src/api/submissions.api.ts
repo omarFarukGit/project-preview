@@ -22,3 +22,7 @@ export function getMySubmissions(params: SubmissionParams) {
     },
   });
 }
+
+export function getSubmissionById(id: string) {
+  return apiClient(`/submissions/${id}`);
+}

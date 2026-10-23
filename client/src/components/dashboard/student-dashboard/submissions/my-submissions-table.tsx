@@ -157,7 +157,7 @@ export default function SubmissionsTable({
                     >
                       <Link
                         className=" flex justify-center items-center gap-1"
-                        href={`/dashboard/submissions/${submission.id}`}
+                        href={`/student-dashboard/submissions/${submission.id}`}
                         aria-label="View submission"
                         title="View submission"
                       >

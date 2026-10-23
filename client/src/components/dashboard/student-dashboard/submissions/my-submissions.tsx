@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 
 import { SubmissionStatus } from "@/types/submissions.types";
-import SubmissionsTable from "../my-submissions-table";
+import SubmissionsTable from "./my-submissions-table";
 import { useGetMySubmissions } from "@/hooks/submissions.hook";
 import useDebounce from "@/hooks/debounce.hook";
 

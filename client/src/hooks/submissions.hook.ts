@@ -1,4 +1,4 @@
-import { createSubmissions, getMySubmissions } from "@/api";
+import { createSubmissions, getMySubmissions, getSubmissionById } from "@/api";
 import { SubmissionParams } from "@/types/submissions.types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -13,5 +13,13 @@ export function useGetMySubmissions(params: SubmissionParams) {
     queryKey: ["my-submissions", params],
     queryFn: () => getMySubmissions(params),
     placeholderData: (previousData) => previousData,
+  });
+}
+
+export function useGetSubmissionById(id: string) {
+  return useQuery({
+    queryKey: ["submission", id],
+    queryFn: () => getSubmissionById(id),
+    enabled: Boolean(id),
   });
 }
