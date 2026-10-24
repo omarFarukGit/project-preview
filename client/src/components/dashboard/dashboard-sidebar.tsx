@@ -91,6 +91,7 @@ export function DashboardSidebar({ role }: { role: UserRole }) {
                         className="mt-1 cursor-pointer hover:bg-primary/5 hover:text-foreground data-[active=true]:bg-primary/15 data-[active=true]:text-primary"
                       >
                         <Link
+                          className=" w-full"
                           href={item.url}
                           aria-current={isActive ? "page" : undefined}
                           onClick={() => setOpenMobile(false)}
