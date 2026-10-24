@@ -200,7 +200,7 @@ const getAllUsers = async (query: GetAllUsersQuery) => {
 
 const updateUserStatus = async (
   userId: string,
-  status: "BLOCKED" | "SUSPENDED",
+  status: "BLOCKED" | "SUSPENDED" |"ACTIVE",
   adminId: string,
 ) => {
   if (userId === adminId) {
@@ -252,6 +252,9 @@ const blockUser = async (userId: string, adminId: string) => {
 
 const suspendUser = async (userId: string, adminId: string) => {
   return updateUserStatus(userId, UserStatus.SUSPENDED, adminId);
+};
+const activedUser = async (userId: string, adminId: string) => {
+  return updateUserStatus(userId, UserStatus.ACTIVE, adminId);
 };
 
 const deleteUser = async (userId: string, adminId: string) => {
@@ -349,4 +352,5 @@ export const usersService = {
   suspendUser,
   deleteUser,
   updateMyProfile,
+  activedUser,
 };

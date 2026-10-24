@@ -93,6 +93,19 @@ const suspendUser = catchAsync(async (req, res) => {
   });
 });
 
+const activedUser = catchAsync(async (req, res) => {
+  const id = req.params.id as string;
+  const userId = req.user?.userId as string;
+  const result = await usersService.activedUser(id, userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User suspended successfully",
+    data: result,
+  });
+});
+
 const deleteUser = catchAsync(async (req, res) => {
   const id = req.params.id as string;
   const userId = req.user?.userId as string;
@@ -115,4 +128,5 @@ export const usersController = {
   suspendUser,
   deleteUser,
   promoteToMentor,
+  activedUser,
 };

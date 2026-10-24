@@ -34,6 +34,7 @@ router.get("/", auth(Role.ADMIN), usersController.getAllUsers);
 router.patch("/:id/block", auth(Role.ADMIN), usersController.blockUser);
 
 router.patch("/:id/suspend", auth(Role.ADMIN), usersController.suspendUser);
+router.patch("/:id/active", auth(Role.ADMIN), usersController.activedUser);
 
 router.delete("/:id", auth(Role.ADMIN), usersController.deleteUser);
 
