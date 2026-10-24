@@ -5,6 +5,7 @@ import httpStatus from "http-status";
 import { GetAllUsersQuery } from "./user.interface";
 import { UploadApiResponse } from "cloudinary";
 import { cloudinary } from "../../lib/cloudinary";
+import { IUpdateMyProfilePayload } from "./user.validation";
 
 const me = async (userId: string) => {
   const user = await prisma.user.findUnique({
@@ -291,6 +292,54 @@ const deleteUser = async (userId: string, adminId: string) => {
   });
 };
 
+const updateMyProfile = async (
+  userId: string,
+  payload: IUpdateMyProfilePayload,
+) => {
+  const existingUser = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      isDeleted: true,
+      status: true,
+    },
+  });
+
+  if (!existingUser || existingUser.isDeleted) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  if (existingUser.status !== "ACTIVE") {
+    throw new AppError(httpStatus.FORBIDDEN, "Your account is not active");
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: payload,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      status: true,
+      isDeleted: true,
+      bio: true,
+      phone: true,
+      country: true,
+      city: true,
+      address: true,
+      githubUrl: true,
+      linkedinUrl: true,
+      portfolioUrl: true,
+      imageUrl: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return updatedUser;
+};
+
 export const usersService = {
   me,
   updateProfileImage,
@@ -299,4 +348,5 @@ export const usersService = {
   blockUser,
   suspendUser,
   deleteUser,
+  updateMyProfile,
 };

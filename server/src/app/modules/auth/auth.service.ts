@@ -9,7 +9,20 @@ import { JwtPayload, SignOptions } from "jsonwebtoken";
 import { jwtUtils } from "../../utils/jwt";
 
 const register = async (payload: IRegisterPayload) => {
-  const { name, email, password, role } = payload;
+  const {
+    name,
+    email,
+    password,
+    role,
+    bio,
+    phone,
+    country,
+    city,
+    address,
+    githubUrl,
+    linkedinUrl,
+    portfolioUrl,
+  } = payload;
 
   const isUserExist = await prisma.user.findUnique({
     where: { email },
@@ -29,12 +42,22 @@ const register = async (payload: IRegisterPayload) => {
 
   const createdUser = await prisma.user.create({
     data: {
-      name: name,
-      email: email,
-      role: role,
+      name,
+      email,
+      role,
       passwordHash: hashedPassword,
       status: "ACTIVE",
       isDeleted: false,
+
+      // Optional profile fields
+      bio: bio ?? null,
+      phone: phone ?? null,
+      country: country ?? null,
+      city: city ?? null,
+      address: address ?? null,
+      githubUrl: githubUrl ?? null,
+      linkedinUrl: linkedinUrl ?? null,
+      portfolioUrl: portfolioUrl ?? null,
     },
     select: {
       id: true,
@@ -42,7 +65,18 @@ const register = async (payload: IRegisterPayload) => {
       email: true,
       role: true,
       status: true,
+      isDeleted: true,
+      bio: true,
+      phone: true,
+      country: true,
+      city: true,
+      address: true,
+      githubUrl: true,
+      linkedinUrl: true,
+      portfolioUrl: true,
+      imageUrl: true,
       createdAt: true,
+      updatedAt: true,
     },
   });
 

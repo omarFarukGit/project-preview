@@ -34,6 +34,14 @@ export type UserMinAggregateOutputType = {
   status: $Enums.UserStatus | null
   imageUrl: string | null
   imagePublicId: string | null
+  bio: string | null
+  phone: string | null
+  country: string | null
+  city: string | null
+  address: string | null
+  githubUrl: string | null
+  linkedinUrl: string | null
+  portfolioUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,6 +56,14 @@ export type UserMaxAggregateOutputType = {
   status: $Enums.UserStatus | null
   imageUrl: string | null
   imagePublicId: string | null
+  bio: string | null
+  phone: string | null
+  country: string | null
+  city: string | null
+  address: string | null
+  githubUrl: string | null
+  linkedinUrl: string | null
+  portfolioUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +78,14 @@ export type UserCountAggregateOutputType = {
   status: number
   imageUrl: number
   imagePublicId: number
+  bio: number
+  phone: number
+  country: number
+  city: number
+  address: number
+  githubUrl: number
+  linkedinUrl: number
+  portfolioUrl: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -78,6 +102,14 @@ export type UserMinAggregateInputType = {
   status?: true
   imageUrl?: true
   imagePublicId?: true
+  bio?: true
+  phone?: true
+  country?: true
+  city?: true
+  address?: true
+  githubUrl?: true
+  linkedinUrl?: true
+  portfolioUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -92,6 +124,14 @@ export type UserMaxAggregateInputType = {
   status?: true
   imageUrl?: true
   imagePublicId?: true
+  bio?: true
+  phone?: true
+  country?: true
+  city?: true
+  address?: true
+  githubUrl?: true
+  linkedinUrl?: true
+  portfolioUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +146,14 @@ export type UserCountAggregateInputType = {
   status?: true
   imageUrl?: true
   imagePublicId?: true
+  bio?: true
+  phone?: true
+  country?: true
+  city?: true
+  address?: true
+  githubUrl?: true
+  linkedinUrl?: true
+  portfolioUrl?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -193,6 +241,14 @@ export type UserGroupByOutputType = {
   status: $Enums.UserStatus
   imageUrl: string
   imagePublicId: string
+  bio: string | null
+  phone: string | null
+  country: string | null
+  city: string | null
+  address: string | null
+  githubUrl: string | null
+  linkedinUrl: string | null
+  portfolioUrl: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -228,6 +284,14 @@ export type UserWhereInput = {
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   imageUrl?: Prisma.StringFilter<"User"> | string
   imagePublicId?: Prisma.StringFilter<"User"> | string
+  bio?: Prisma.StringNullableFilter<"User"> | string | null
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  country?: Prisma.StringNullableFilter<"User"> | string | null
+  city?: Prisma.StringNullableFilter<"User"> | string | null
+  address?: Prisma.StringNullableFilter<"User"> | string | null
+  githubUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  linkedinUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  portfolioUrl?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   submissions?: Prisma.SubmissionListRelationFilter
@@ -245,6 +309,14 @@ export type UserOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   imagePublicId?: Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  githubUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
@@ -265,6 +337,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   imageUrl?: Prisma.StringFilter<"User"> | string
   imagePublicId?: Prisma.StringFilter<"User"> | string
+  bio?: Prisma.StringNullableFilter<"User"> | string | null
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  country?: Prisma.StringNullableFilter<"User"> | string | null
+  city?: Prisma.StringNullableFilter<"User"> | string | null
+  address?: Prisma.StringNullableFilter<"User"> | string | null
+  githubUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  linkedinUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  portfolioUrl?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   submissions?: Prisma.SubmissionListRelationFilter
@@ -282,6 +362,14 @@ export type UserOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   imagePublicId?: Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  githubUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -302,6 +390,14 @@ export type UserScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
   imageUrl?: Prisma.StringWithAggregatesFilter<"User"> | string
   imagePublicId?: Prisma.StringWithAggregatesFilter<"User"> | string
+  bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  country?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  city?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  address?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  githubUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  linkedinUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  portfolioUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -316,6 +412,14 @@ export type UserCreateInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -333,6 +437,14 @@ export type UserUncheckedCreateInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -350,6 +462,14 @@ export type UserUpdateInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -367,6 +487,14 @@ export type UserUncheckedUpdateInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -384,6 +512,14 @@ export type UserCreateManyInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -398,6 +534,14 @@ export type UserUpdateManyMutationInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -412,6 +556,14 @@ export type UserUncheckedUpdateManyInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -436,6 +588,14 @@ export type UserCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   imagePublicId?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  githubUrl?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -450,6 +610,14 @@ export type UserMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   imagePublicId?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  githubUrl?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -464,6 +632,14 @@ export type UserMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   imagePublicId?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  githubUrl?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -534,6 +710,14 @@ export type UserCreateWithoutFeedbacksInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -550,6 +734,14 @@ export type UserUncheckedCreateWithoutFeedbacksInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -582,6 +774,14 @@ export type UserUpdateWithoutFeedbacksInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -598,6 +798,14 @@ export type UserUncheckedUpdateWithoutFeedbacksInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -614,6 +822,14 @@ export type UserCreateWithoutSubmissionsInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.SubmissionCreateNestedManyWithoutReviewedByInput
@@ -630,6 +846,14 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.SubmissionUncheckedCreateNestedManyWithoutReviewedByInput
@@ -651,6 +875,14 @@ export type UserCreateWithoutReviewsInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -667,6 +899,14 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   status?: $Enums.UserStatus
   imageUrl?: string
   imagePublicId?: string
+  bio?: string | null
+  phone?: string | null
+  country?: string | null
+  city?: string | null
+  address?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -699,6 +939,14 @@ export type UserUpdateWithoutSubmissionsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.SubmissionUpdateManyWithoutReviewedByNestedInput
@@ -715,6 +963,14 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.SubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
@@ -742,6 +998,14 @@ export type UserUpdateWithoutReviewsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -758,6 +1022,14 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -823,6 +1095,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   imageUrl?: boolean
   imagePublicId?: boolean
+  bio?: boolean
+  phone?: boolean
+  country?: boolean
+  city?: boolean
+  address?: boolean
+  githubUrl?: boolean
+  linkedinUrl?: boolean
+  portfolioUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
@@ -841,6 +1121,14 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   imageUrl?: boolean
   imagePublicId?: boolean
+  bio?: boolean
+  phone?: boolean
+  country?: boolean
+  city?: boolean
+  address?: boolean
+  githubUrl?: boolean
+  linkedinUrl?: boolean
+  portfolioUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -855,6 +1143,14 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   imageUrl?: boolean
   imagePublicId?: boolean
+  bio?: boolean
+  phone?: boolean
+  country?: boolean
+  city?: boolean
+  address?: boolean
+  githubUrl?: boolean
+  linkedinUrl?: boolean
+  portfolioUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -869,11 +1165,19 @@ export type UserSelectScalar = {
   status?: boolean
   imageUrl?: boolean
   imagePublicId?: boolean
+  bio?: boolean
+  phone?: boolean
+  country?: boolean
+  city?: boolean
+  address?: boolean
+  githubUrl?: boolean
+  linkedinUrl?: boolean
+  portfolioUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "isDeleted" | "status" | "imageUrl" | "imagePublicId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "isDeleted" | "status" | "imageUrl" | "imagePublicId" | "bio" | "phone" | "country" | "city" | "address" | "githubUrl" | "linkedinUrl" | "portfolioUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
@@ -900,6 +1204,14 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     status: $Enums.UserStatus
     imageUrl: string
     imagePublicId: string
+    bio: string | null
+    phone: string | null
+    country: string | null
+    city: string | null
+    address: string | null
+    githubUrl: string | null
+    linkedinUrl: string | null
+    portfolioUrl: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1337,6 +1649,14 @@ export interface UserFieldRefs {
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
   readonly imageUrl: Prisma.FieldRef<"User", 'String'>
   readonly imagePublicId: Prisma.FieldRef<"User", 'String'>
+  readonly bio: Prisma.FieldRef<"User", 'String'>
+  readonly phone: Prisma.FieldRef<"User", 'String'>
+  readonly country: Prisma.FieldRef<"User", 'String'>
+  readonly city: Prisma.FieldRef<"User", 'String'>
+  readonly address: Prisma.FieldRef<"User", 'String'>
+  readonly githubUrl: Prisma.FieldRef<"User", 'String'>
+  readonly linkedinUrl: Prisma.FieldRef<"User", 'String'>
+  readonly portfolioUrl: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

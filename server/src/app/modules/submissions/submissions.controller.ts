@@ -31,7 +31,8 @@ const getMySubmissions = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "Your submissions retrieved successfully",
-    data: result,
+    data: result.data,
+    meta: result.meta,
   });
 });
 
@@ -101,6 +102,56 @@ const getStudentStats = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyReviewedSubmissions = catchAsync(async (req, res) => {
+  const mentorId = req?.user?.userId as string;
+
+  const result = await submissionsService.getMyReviewedSubmissions(mentorId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Reviewed submissions retrieved successfully",
+    data: result,
+  });
+});
+
+const getMentorOverview = catchAsync(async (req, res) => {
+  const mentorId = req.user?.userId as string;
+
+  const result = await submissionsService.getMentorOverview(mentorId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Mentor overview retrieved successfully",
+    data: result,
+  });
+});
+
+
+
+const getAdminOverview = catchAsync(async (req, res) => {
+  const result = await submissionsService.getAdminOverview();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Admin overview retrieved successfully",
+    data: result,
+  });
+});
+
+const getAllReviewedSubmissions = catchAsync(async (req, res) => {
+  const result = await submissionsService.getAllReviewedSubmissions();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "All reviewed submissions retrieved successfully",
+    data: result,
+  });
+});
+
 export const submissionsController = {
   createsubmissions,
   getMySubmissions,
@@ -109,4 +160,8 @@ export const submissionsController = {
   getSubmissionStats,
   reviewSubmission,
   getStudentStats,
+  getMyReviewedSubmissions,
+  getMentorOverview,
+  getAdminOverview,
+  getAllReviewedSubmissions,
 };

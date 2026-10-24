@@ -719,6 +719,14 @@ export const UserScalarFieldEnum = {
   status: 'status',
   imageUrl: 'imageUrl',
   imagePublicId: 'imagePublicId',
+  bio: 'bio',
+  phone: 'phone',
+  country: 'country',
+  city: 'city',
+  address: 'address',
+  githubUrl: 'githubUrl',
+  linkedinUrl: 'linkedinUrl',
+  portfolioUrl: 'portfolioUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

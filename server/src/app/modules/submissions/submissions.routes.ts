@@ -42,6 +42,28 @@ router.get(
   submissionsController.getAllSubmissions,
 );
 router.get(
+  "/my-reviewed",
+  auth(Role.MENTOR),
+  submissionsController.getMyReviewedSubmissions,
+);
+router.get(
+  "/mentor-overview",
+  auth(Role.MENTOR),
+  submissionsController.getMentorOverview,
+);
+
+router.get(
+  "/admin-overview",
+  auth(Role.ADMIN),
+  submissionsController.getAdminOverview,
+);
+router.get(
+  "/all-reviewed",
+  auth(Role.ADMIN),
+  submissionsController.getAllReviewedSubmissions,
+);
+
+router.get(
   "/:id",
   auth(Role.STUDENT, Role.MENTOR, Role.ADMIN),
   submissionsController.getSubmissionById,
@@ -52,6 +74,12 @@ router.patch(
   auth(Role.MENTOR, Role.ADMIN),
   validateRequest(submissionsValidation.reviewSubmissionSchema),
   submissionsController.reviewSubmission,
+);
+
+router.get(
+  "/mentor-overview",
+  auth(Role.MENTOR),
+  submissionsController.getMentorOverview,
 );
 
 export const submissionsRoutes = router;

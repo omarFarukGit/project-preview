@@ -3,6 +3,9 @@ import { usersController } from "./user.controller";
 import { auth } from "../../middleware/checkAuth";
 import { Role } from "../../../generated/prisma/enums";
 import { upload } from "../../lib/multer";
+import { validateRequest } from "../../middleware/validateRequest";
+import { UserValidation } from "../auth/auth.validation";
+import { usersValidation } from "./user.validation";
 
 const router = Router();
 
@@ -10,6 +13,13 @@ router.get(
   "/me",
   auth(Role.ADMIN, Role.MENTOR, Role.STUDENT),
   usersController.me,
+);
+
+router.patch(
+  "/me",
+  auth(),
+  validateRequest(usersValidation.UpdateMyProfileZodSchema),
+  usersController.updateMyProfile,
 );
 
 router.patch(

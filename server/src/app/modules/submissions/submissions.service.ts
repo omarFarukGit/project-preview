@@ -285,37 +285,349 @@ const getSubmissionStats = async () => {
 };
 
 const getStudentStats = async (studentId: string) => {
-  const [total, pending, approved, rejected] = await Promise.all([
+  const [total, pending, approved, rejected, recentSubmissions, recentReviews] =
+    await Promise.all([
+      prisma.submission.count({
+        where: { studentId },
+      }),
+
+      prisma.submission.count({
+        where: { studentId, status: "PENDING" },
+      }),
+
+      prisma.submission.count({
+        where: { studentId, status: "APPROVED" },
+      }),
+
+      prisma.submission.count({
+        where: { studentId, status: "REJECTED" },
+      }),
+
+      // Recent submissions
+      prisma.submission.findMany({
+        where: { studentId },
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        select: {
+          id: true,
+          projectName: true,
+          repoUrl: true,
+          liveUrl: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      }),
+
+      // Recent reviews
+      prisma.submission.findMany({
+        where: {
+          studentId,
+          feedbacks: {
+            some: {},
+          },
+        },
+        orderBy: { updatedAt: "desc" },
+        take: 5,
+        select: {
+          id: true,
+          projectName: true,
+          status: true,
+          updatedAt: true,
+          feedbacks: {
+            orderBy: { createdAt: "desc" },
+            take: 1,
+            select: {
+              id: true,
+              comment: true,
+              createdAt: true,
+              mentor: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      }),
+    ]);
+
+  return {
+    stats: {
+      total,
+      pending,
+      approved,
+      rejected,
+      approvalRate: total > 0 ? Math.round((approved / total) * 100) : 0,
+    },
+    recentSubmissions,
+    recentReviews,
+  };
+};
+
+const getMyReviewedSubmissions = async (mentorId: string) => {
+  const feedbacks = await prisma.feedback.findMany({
+    where: {
+      mentorId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      comment: true,
+      createdAt: true,
+      updatedAt: true,
+
+      submission: {
+        select: {
+          id: true,
+          projectName: true,
+          repoUrl: true,
+          liveUrl: true,
+          description: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+
+          student: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return {
+    totalReviewed: feedbacks.length,
+    reviews: feedbacks,
+  };
+};
+
+const getMentorOverview = async (mentorId: string) => {
+  const [
+    totalSubmissions,
+    pending,
+    approved,
+    rejected,
+    totalReviews,
+    recentSubmissions,
+    recentReviews,
+  ] = await Promise.all([
+
+    prisma.submission.count(),
+
     prisma.submission.count({
-      where: { studentId },
+      where: { status: "PENDING" },
     }),
+
     prisma.submission.count({
-      where: {
-        studentId,
-        status: "PENDING",
+      where: { status: "APPROVED" },
+    }),
+
+    prisma.submission.count({
+      where: { status: "REJECTED" },
+    }),
+
+    prisma.feedback.count({
+      where: { mentorId },
+    }),
+
+    prisma.submission.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        projectName: true,
+        status: true,
+        createdAt: true,
+        student: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
       },
     }),
-    prisma.submission.count({
-      where: {
-        studentId,
-        status: "APPROVED",
-      },
-    }),
-    prisma.submission.count({
-      where: {
-        studentId,
-        status: "REJECTED",
+
+    prisma.feedback.findMany({
+      where: { mentorId },
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        comment: true,
+        createdAt: true,
+        submission: {
+          select: {
+            id: true,
+            projectName: true,
+            status: true,
+            student: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
     }),
   ]);
 
   return {
-    total,
+    stats: {
+      totalSubmissions,
+      pending,
+      approved,
+      rejected,
+      totalReviews,
+      approvalRate:
+        totalSubmissions > 0
+          ? Math.round((approved / totalSubmissions) * 100)
+          : 0,
+    },
+    recentSubmissions,
+    recentReviews,
+  };
+};
+
+
+const getAdminOverview = async () => {
+  const [
+    totalUsers,
+    totalStudents,
+    totalMentors,
+    totalAdmins,
+    totalSubmissions,
     pending,
     approved,
     rejected,
+    totalReviews,
+    recentSubmissions,
+    recentUsers,
+  ] = await Promise.all([
+
+    prisma.user.count(),
+    prisma.user.count({ where: { role: "STUDENT" } }),
+    prisma.user.count({ where: { role: "MENTOR" } }),
+    prisma.user.count({ where: { role: "ADMIN" } }),
+
+    prisma.submission.count(),
+    prisma.submission.count({ where: { status: "PENDING" } }),
+    prisma.submission.count({ where: { status: "APPROVED" } }),
+    prisma.submission.count({ where: { status: "REJECTED" } }),
+
+    prisma.feedback.count(),
+
+
+    prisma.submission.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        projectName: true,
+        status: true,
+        createdAt: true,
+        student: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    }),
+
+    // Latest registered users
+    prisma.user.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    }),
+  ]);
+
+  return {
+    stats: {
+      totalUsers,
+      totalStudents,
+      totalMentors,
+      totalAdmins,
+      totalSubmissions,
+      pending,
+      approved,
+      rejected,
+      totalReviews,
+      approvalRate:
+        totalSubmissions > 0
+          ? Math.round((approved / totalSubmissions) * 100)
+          : 0,
+    },
+    recentSubmissions,
+    recentUsers,
   };
 };
+
+const getAllReviewedSubmissions = async () => {
+  const reviews = await prisma.feedback.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      comment: true,
+      createdAt: true,
+      updatedAt: true,
+
+      mentor: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+
+      submission: {
+        select: {
+          id: true,
+          projectName: true,
+          repoUrl: true,
+          liveUrl: true,
+          description: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+
+          student: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return {
+    totalReviews: reviews.length,
+    reviews,
+  };
+};
+
 
 export const submissionsService = {
   createSubmissions,
@@ -325,4 +637,8 @@ export const submissionsService = {
   getSubmissionStats,
   reviewSubmission,
   getStudentStats,
+  getMyReviewedSubmissions,
+  getMentorOverview,
+  getAdminOverview,
+  getAllReviewedSubmissions,
 };
