@@ -7,7 +7,7 @@ export interface EditProfileDialogProps {
 }
 
 export type UserRole = "STUDENT" | "MENTOR" | "ADMIN";
-export type UserStatus = "ACTIVE" | "INACTIVE" | "BLOCKED";
+export type UserStatus = "ACTIVE" | "SUSPEND" | "BLOCKED";
 
 export type UserProfileData = {
   id: string;
@@ -99,3 +99,34 @@ export const profileFields = [
     maxLength: 2048,
   },
 ] as const;
+
+export type User = UserProfileData;
+
+export interface UsersMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface AllUsersResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: User[];
+  meta: UsersMeta;
+}
+
+export interface UsersParams {
+  page: number;
+  limit: number;
+  search?: string;
+  role?: UserRole;
+}
+
+export interface UsersMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
