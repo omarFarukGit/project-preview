@@ -157,7 +157,7 @@ export default function AdminSubmissionsTable({
                     >
                       <Link
                         className="cursor-pointer flex justify-center items-center gap-2"
-                        href={`/mentor-dashboard/submissions/${submission.id}`}
+                        href={`/admin-dashboard/submissions/${submission.id}`}
                         aria-label="View submission details"
                         title="View submission details"
                       >

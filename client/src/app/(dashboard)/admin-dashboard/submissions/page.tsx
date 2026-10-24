@@ -1,11 +1,10 @@
-import MentorSubmissionsPage from "@/components/dashboard/mentor/submissions/mentor-submissions";
-
-function MentorSubmissions() {
+import AdminSubmissionsPage from "@/components/dashboard/admin/submissions/admin-submissions";
+function AdminSubmissions() {
   return (
     <div>
-      <MentorSubmissionsPage />
+      <AdminSubmissionsPage />
     </div>
   );
 }
 
-export default MentorSubmissions;
+export default AdminSubmissions;
