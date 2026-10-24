@@ -51,6 +51,18 @@ router.get(
   auth(Role.MENTOR),
   submissionsController.getMentorOverview,
 );
+
+router.get(
+  "/admin-overview",
+  auth(Role.ADMIN),
+  submissionsController.getAdminOverview,
+);
+router.get(
+  "/all-reviewed",
+  auth(Role.ADMIN),
+  submissionsController.getAllReviewedSubmissions,
+);
+
 router.get(
   "/:id",
   auth(Role.STUDENT, Role.MENTOR, Role.ADMIN),

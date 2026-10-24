@@ -127,6 +127,31 @@ const getMentorOverview = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+
+
+const getAdminOverview = catchAsync(async (req, res) => {
+  const result = await submissionsService.getAdminOverview();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Admin overview retrieved successfully",
+    data: result,
+  });
+});
+
+const getAllReviewedSubmissions = catchAsync(async (req, res) => {
+  const result = await submissionsService.getAllReviewedSubmissions();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "All reviewed submissions retrieved successfully",
+    data: result,
+  });
+});
+
 export const submissionsController = {
   createsubmissions,
   getMySubmissions,
@@ -137,4 +162,6 @@ export const submissionsController = {
   getStudentStats,
   getMyReviewedSubmissions,
   getMentorOverview,
+  getAdminOverview,
+  getAllReviewedSubmissions,
 };

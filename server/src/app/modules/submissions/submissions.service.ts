@@ -498,6 +498,137 @@ const getMentorOverview = async (mentorId: string) => {
   };
 };
 
+
+const getAdminOverview = async () => {
+  const [
+    totalUsers,
+    totalStudents,
+    totalMentors,
+    totalAdmins,
+    totalSubmissions,
+    pending,
+    approved,
+    rejected,
+    totalReviews,
+    recentSubmissions,
+    recentUsers,
+  ] = await Promise.all([
+
+    prisma.user.count(),
+    prisma.user.count({ where: { role: "STUDENT" } }),
+    prisma.user.count({ where: { role: "MENTOR" } }),
+    prisma.user.count({ where: { role: "ADMIN" } }),
+
+    prisma.submission.count(),
+    prisma.submission.count({ where: { status: "PENDING" } }),
+    prisma.submission.count({ where: { status: "APPROVED" } }),
+    prisma.submission.count({ where: { status: "REJECTED" } }),
+
+    prisma.feedback.count(),
+
+
+    prisma.submission.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        projectName: true,
+        status: true,
+        createdAt: true,
+        student: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    }),
+
+    // Latest registered users
+    prisma.user.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    }),
+  ]);
+
+  return {
+    stats: {
+      totalUsers,
+      totalStudents,
+      totalMentors,
+      totalAdmins,
+      totalSubmissions,
+      pending,
+      approved,
+      rejected,
+      totalReviews,
+      approvalRate:
+        totalSubmissions > 0
+          ? Math.round((approved / totalSubmissions) * 100)
+          : 0,
+    },
+    recentSubmissions,
+    recentUsers,
+  };
+};
+
+const getAllReviewedSubmissions = async () => {
+  const reviews = await prisma.feedback.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      comment: true,
+      createdAt: true,
+      updatedAt: true,
+
+      mentor: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+
+      submission: {
+        select: {
+          id: true,
+          projectName: true,
+          repoUrl: true,
+          liveUrl: true,
+          description: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+
+          student: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return {
+    totalReviews: reviews.length,
+    reviews,
+  };
+};
+
+
 export const submissionsService = {
   createSubmissions,
   getMySubmissions,
@@ -507,5 +638,7 @@ export const submissionsService = {
   reviewSubmission,
   getStudentStats,
   getMyReviewedSubmissions,
-  getMentorOverview
+  getMentorOverview,
+  getAdminOverview,
+  getAllReviewedSubmissions,
 };
