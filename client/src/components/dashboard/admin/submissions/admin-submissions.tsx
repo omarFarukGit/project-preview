@@ -16,10 +16,10 @@ import {
 
 import { useGetAllSubmissions } from "@/hooks/submissions.hook";
 import useDebounce from "@/hooks/debounce.hook";
-import MentorSubmissionsTable from "./submitssions-table";
 import { SubmissionStatus } from "@/types/submissions.types";
+import AdminSubmissionsTable from "./admin-submitssions-table";
 
-export default function MentorSubmissionsPage() {
+export default function AdminSubmissionsPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -73,16 +73,13 @@ export default function MentorSubmissionsPage() {
     page,
     limit,
     ...(searchTerm ? { searchTerm } : {}),
-    ...(status !== "ALL"
-      ? { status: status as SubmissionStatus }
-      : {}),
+    ...(status !== "ALL" ? { status: status as SubmissionStatus } : {}),
   };
 
-  const { data, isLoading, isFetching, isError } =
-    useGetAllSubmissions(params);
+  const { data, isLoading, isFetching, isError } = useGetAllSubmissions(params);
 
   const submissions = data?.data ?? [];
-  const meta =data?.meta
+  const meta = data?.meta;
 
   function handleStatusChange(value: string | null) {
     if (value === null) return;
@@ -117,11 +114,10 @@ export default function MentorSubmissionsPage() {
     <section className="min-w-0 space-y-6 p-4 sm:p-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">
-          All Submissions
-        </h1>
+        <h1 className="text-2xl font-bold tracking-tight">All Submissions</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Review student projects, check submission status, and provide feedback.
+          Review student projects, check submission status, and provide
+          feedback.
         </p>
       </div>
 
@@ -188,9 +184,7 @@ export default function MentorSubmissionsPage() {
         </p>
 
         {isFetching && (
-          <p className="text-xs text-muted-foreground">
-            Updating results...
-          </p>
+          <p className="text-xs text-muted-foreground">Updating results...</p>
         )}
       </div>
 
@@ -206,7 +200,7 @@ export default function MentorSubmissionsPage() {
           </p>
         </div>
       ) : (
-        <MentorSubmissionsTable
+        <AdminSubmissionsTable
           submissions={submissions}
           page={meta?.page ?? page}
           totalPages={meta?.totalPages ?? 1}

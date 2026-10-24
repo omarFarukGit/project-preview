@@ -26,11 +26,7 @@ interface MentorSubmissionsTableProps {
   searchTerm: string;
 }
 
-function SubmissionStatusBadge({
-  status,
-}: {
-  status: Submission["status"];
-}) {
+function SubmissionStatusBadge({ status }: { status: Submission["status"] }) {
   const variant = {
     PENDING: "secondary",
     APPROVED: "default",
@@ -113,9 +109,7 @@ export default function MentorSubmissionsTable({
                         className="mt-1 inline-flex items-center gap-1 text-muted-foreground hover:text-primary"
                       >
                         <Globe className="size-3 shrink-0" />
-                        <span className="hidden sm:inline">
-                          Live Demo
-                        </span>
+                        <span className="hidden sm:inline">Live Demo</span>
                         <ExternalLink className="hidden size-3 shrink-0 sm:inline" />
                       </a>
                     )}
@@ -137,9 +131,7 @@ export default function MentorSubmissionsTable({
                       className="inline-flex items-center justify-center gap-2 rounded-md p-1.5 hover:bg-accent hover:text-primary sm:justify-start sm:p-0"
                     >
                       <FaGithub className="size-4 shrink-0" />
-                      <span className="hidden sm:inline">
-                        Repository
-                      </span>
+                      <span className="hidden sm:inline">Repository</span>
                       <ExternalLink className="hidden size-3 shrink-0 sm:inline" />
                     </a>
                   </TableCell>
@@ -164,7 +156,7 @@ export default function MentorSubmissionsTable({
                       className="size-8 p-0 sm:h-8 sm:w-auto sm:gap-2 sm:px-3"
                     >
                       <Link
-                      className="cursor-pointer flex justify-center items-center gap-2"
+                        className="cursor-pointer flex justify-center items-center gap-2"
                         href={`/mentor-dashboard/submissions/${submission.id}`}
                         aria-label="View submission details"
                         title="View submission details"

@@ -1,8 +1,6 @@
-
 "use client";
 
 import { useState } from "react";
-
 
 import { Button } from "@/components/ui/button";
 import {
@@ -49,7 +47,9 @@ export function SubmissionReviewModal({
   async function handleReview() {
     if (!feedback.trim()) {
       toast.add({
-        description:"Please provide feedback." ,type:'error'     });
+        description: "Please provide feedback.",
+        type: "error",
+      });
       return;
     }
 
@@ -62,19 +62,23 @@ export function SubmissionReviewModal({
         },
       });
       toast.add({
-          description:"Review submitted successfully.." ,type:'success'     });
-          setOpen(false);
-          return;
+        description: "Review submitted successfully..",
+        type: "success",
+      });
+      setOpen(false);
+      return;
     } catch {
       toast.add({
-          description:"Failed to submit review. Please try again." ,type:'error'     });
+        description: "Failed to submit review. Please try again.",
+        type: "error",
+      });
     }
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger >
-        <Button className={'cursor-pointer'}>Review Submission</Button>
+      <DialogTrigger>
+        <Button className={"cursor-pointer"}>Review Submission</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-lg">
@@ -123,7 +127,7 @@ export function SubmissionReviewModal({
 
         <DialogFooter>
           <Button
-          className={"cursor-pointer"}
+            className={"cursor-pointer"}
             variant="outline"
             onClick={() => setOpen(false)}
             disabled={isPending}
@@ -131,7 +135,11 @@ export function SubmissionReviewModal({
             Cancel
           </Button>
 
-          <Button className={"cursor-pointer"} onClick={handleReview} disabled={isPending}>
+          <Button
+            className={"cursor-pointer"}
+            onClick={handleReview}
+            disabled={isPending}
+          >
             {isPending ? "Submitting..." : "Submit Review"}
           </Button>
         </DialogFooter>

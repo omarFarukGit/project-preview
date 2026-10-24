@@ -76,12 +76,12 @@ export default function MentorSubmissionDetailsPage() {
       <SubmissionProjectCard submission={submission} />
 
       <SubmissionPeopleCards submission={submission} />
-        <div className="flex justify-end">
-    <SubmissionReviewModal
-      submissionId={submission.id}
-      currentStatus={submission.status}
-    />
-  </div>
+      <div className="flex justify-end">
+        <SubmissionReviewModal
+          submissionId={submission.id}
+          currentStatus={submission.status}
+        />
+      </div>
       <SubmissionFeedbackCard feedbacks={submission.feedbacks ?? []} />
     </section>
   );
