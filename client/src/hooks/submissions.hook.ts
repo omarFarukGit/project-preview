@@ -1,6 +1,8 @@
 import {
   createSubmissions,
   getAllSubmissions,
+  getMentorOverview,
+  getMentorReviewed,
   getMySubmissions,
   getSubmissionById,
 } from "@/api";
@@ -33,5 +35,18 @@ export function useGetSubmissionById(id: string) {
     queryKey: ["submission", id],
     queryFn: () => getSubmissionById(id),
     enabled: Boolean(id),
+  });
+}
+
+export function useGetMentorOverview() {
+  return useQuery({
+    queryKey: ["mentor-overview"],
+    queryFn: getMentorOverview,
+  });
+}
+export function useGetMyReviewed() {
+  return useQuery({
+    queryKey: ["mentor-review"],
+    queryFn: getMentorReviewed,
   });
 }

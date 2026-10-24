@@ -1,5 +1,9 @@
-import React from "react";
+import MentorOverview from "@/components/dashboard/mentor/mentor-overview/mentor-overview";
 
-export default function page() {
-  return <div>mentor</div>;
+export default function MentorDashboardPage() {
+  return (
+    <div className=" p-4">
+      <MentorOverview />
+    </div>
+  );
 }
