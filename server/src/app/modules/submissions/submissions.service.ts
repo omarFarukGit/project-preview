@@ -285,35 +285,84 @@ const getSubmissionStats = async () => {
 };
 
 const getStudentStats = async (studentId: string) => {
-  const [total, pending, approved, rejected] = await Promise.all([
-    prisma.submission.count({
-      where: { studentId },
-    }),
-    prisma.submission.count({
-      where: {
-        studentId,
-        status: "PENDING",
-      },
-    }),
-    prisma.submission.count({
-      where: {
-        studentId,
-        status: "APPROVED",
-      },
-    }),
-    prisma.submission.count({
-      where: {
-        studentId,
-        status: "REJECTED",
-      },
-    }),
-  ]);
+  const [total, pending, approved, rejected, recentSubmissions, recentReviews] =
+    await Promise.all([
+      prisma.submission.count({
+        where: { studentId },
+      }),
+
+      prisma.submission.count({
+        where: { studentId, status: "PENDING" },
+      }),
+
+      prisma.submission.count({
+        where: { studentId, status: "APPROVED" },
+      }),
+
+      prisma.submission.count({
+        where: { studentId, status: "REJECTED" },
+      }),
+
+      // Recent submissions
+      prisma.submission.findMany({
+        where: { studentId },
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        select: {
+          id: true,
+          projectName: true,
+          repoUrl: true,
+          liveUrl: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      }),
+
+      // Recent reviews
+      prisma.submission.findMany({
+        where: {
+          studentId,
+          feedbacks: {
+            some: {},
+          },
+        },
+        orderBy: { updatedAt: "desc" },
+        take: 5,
+        select: {
+          id: true,
+          projectName: true,
+          status: true,
+          updatedAt: true,
+          feedbacks: {
+            orderBy: { createdAt: "desc" },
+            take: 1,
+            select: {
+              id: true,
+              comment: true,
+              createdAt: true,
+              mentor: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      }),
+    ]);
 
   return {
-    total,
-    pending,
-    approved,
-    rejected,
+    stats: {
+      total,
+      pending,
+      approved,
+      rejected,
+      approvalRate: total > 0 ? Math.round((approved / total) * 100) : 0,
+    },
+    recentSubmissions,
+    recentReviews,
   };
 };
 
