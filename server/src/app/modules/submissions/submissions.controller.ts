@@ -102,6 +102,31 @@ const getStudentStats = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyReviewedSubmissions = catchAsync(async (req, res) => {
+  const mentorId = req?.user?.userId as string;
+
+  const result = await submissionsService.getMyReviewedSubmissions(mentorId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Reviewed submissions retrieved successfully",
+    data: result,
+  });
+});
+
+const getMentorOverview = catchAsync(async (req, res) => {
+  const mentorId = req.user?.userId as string;
+
+  const result = await submissionsService.getMentorOverview(mentorId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Mentor overview retrieved successfully",
+    data: result,
+  });
+});
 export const submissionsController = {
   createsubmissions,
   getMySubmissions,
@@ -110,4 +135,6 @@ export const submissionsController = {
   getSubmissionStats,
   reviewSubmission,
   getStudentStats,
+  getMyReviewedSubmissions,
+  getMentorOverview,
 };

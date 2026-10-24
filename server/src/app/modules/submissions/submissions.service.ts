@@ -366,6 +366,138 @@ const getStudentStats = async (studentId: string) => {
   };
 };
 
+const getMyReviewedSubmissions = async (mentorId: string) => {
+  const feedbacks = await prisma.feedback.findMany({
+    where: {
+      mentorId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      comment: true,
+      createdAt: true,
+      updatedAt: true,
+
+      submission: {
+        select: {
+          id: true,
+          projectName: true,
+          repoUrl: true,
+          liveUrl: true,
+          description: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+
+          student: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return {
+    totalReviewed: feedbacks.length,
+    reviews: feedbacks,
+  };
+};
+
+const getMentorOverview = async (mentorId: string) => {
+  const [
+    totalSubmissions,
+    pending,
+    approved,
+    rejected,
+    totalReviews,
+    recentSubmissions,
+    recentReviews,
+  ] = await Promise.all([
+
+    prisma.submission.count(),
+
+    prisma.submission.count({
+      where: { status: "PENDING" },
+    }),
+
+    prisma.submission.count({
+      where: { status: "APPROVED" },
+    }),
+
+    prisma.submission.count({
+      where: { status: "REJECTED" },
+    }),
+
+    prisma.feedback.count({
+      where: { mentorId },
+    }),
+
+    prisma.submission.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        projectName: true,
+        status: true,
+        createdAt: true,
+        student: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    }),
+
+    prisma.feedback.findMany({
+      where: { mentorId },
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        comment: true,
+        createdAt: true,
+        submission: {
+          select: {
+            id: true,
+            projectName: true,
+            status: true,
+            student: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    }),
+  ]);
+
+  return {
+    stats: {
+      totalSubmissions,
+      pending,
+      approved,
+      rejected,
+      totalReviews,
+      approvalRate:
+        totalSubmissions > 0
+          ? Math.round((approved / totalSubmissions) * 100)
+          : 0,
+    },
+    recentSubmissions,
+    recentReviews,
+  };
+};
+
 export const submissionsService = {
   createSubmissions,
   getMySubmissions,
@@ -374,4 +506,6 @@ export const submissionsService = {
   getSubmissionStats,
   reviewSubmission,
   getStudentStats,
+  getMyReviewedSubmissions,
+  getMentorOverview
 };
