@@ -1,5 +1,6 @@
 import {
   createSubmissions,
+  getAdminOverview,
   getAllSubmissions,
   getMentorOverview,
   getMentorReviewed,
@@ -48,5 +49,12 @@ export function useGetMyReviewed() {
   return useQuery({
     queryKey: ["mentor-review"],
     queryFn: getMentorReviewed,
+  });
+}
+
+export function useGetAdminOverview() {
+  return useQuery({
+    queryKey: ["admin-overview"],
+    queryFn: getAdminOverview,
   });
 }
