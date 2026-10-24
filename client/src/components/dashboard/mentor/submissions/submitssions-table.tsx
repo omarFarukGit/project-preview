@@ -164,6 +164,7 @@ export default function MentorSubmissionsTable({
                       className="size-8 p-0 sm:h-8 sm:w-auto sm:gap-2 sm:px-3"
                     >
                       <Link
+                      className="cursor-pointer flex justify-center items-center gap-2"
                         href={`/mentor-dashboard/submissions/${submission.id}`}
                         aria-label="View submission details"
                         title="View submission details"

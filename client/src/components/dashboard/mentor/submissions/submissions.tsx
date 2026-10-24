@@ -81,8 +81,6 @@ export default function MentorSubmissionsPage() {
   const { data, isLoading, isFetching, isError } =
     useGetAllSubmissions(params);
 
-  // Expected API response:
-  // { success, statusCode, message, data: [...], meta: {...} }
   const submissions = data?.data ?? [];
   const meta =data?.meta
 

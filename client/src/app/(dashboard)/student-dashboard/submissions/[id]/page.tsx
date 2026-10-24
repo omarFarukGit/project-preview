@@ -8,11 +8,11 @@ import { Button } from "@/components/ui/button";
 
 import { useGetSubmissionById } from "@/hooks/submissions.hook";
 
-import SubmissionDetailsHeader from "@/components/dashboard/student-dashboard/submissions/details/submission-details-header";
-import SubmissionPeopleCards from "@/components/dashboard/student-dashboard/submissions/details/submission-people-cards";
-import SubmissionFeedbackCard from "@/components/dashboard/student-dashboard/submissions/details/submission-feedback-card";
+import SubmissionDetailsHeader from "@/components/shared/submission/details/submission-details-header";
+import SubmissionPeopleCards from "@/components/shared/submission/details/submission-people-cards";
+import SubmissionFeedbackCard from "@/components/shared/submission/details/submission-feedback-card";
 import { SubmissionDetails } from "@/types/submissions.types";
-import SubmissionProjectCard from "@/components/dashboard/student-dashboard/submissions/details/submission-project-card";
+import SubmissionProjectCard from "@/components/shared/submission/details/submission-project-card";
 
 interface SubmissionDetailsResponse {
   success: boolean;
