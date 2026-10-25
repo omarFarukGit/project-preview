@@ -59,14 +59,13 @@ export function LoginForm({
               else if (role === "MENTOR") router.push("/mentor-dashboard");
             }
           },
-
-          onError: () => {
-            toast.add({
-              title: "Login failed",
-              description: "Invalid email or password",
-              type: "error",
-            });
-          },
+        onError: (err) => {
+          toast.add({
+            title: "Login Failed",
+            description: err.message || "Invalid email or password",
+            type: "error",
+          });
+        },
         },
       );
     },

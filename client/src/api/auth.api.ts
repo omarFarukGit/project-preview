@@ -1,8 +1,15 @@
 import apiClient from "@/lib/apiClient";
-import { TLoginPayload } from "@/types/auth.types";
+import { RegistrationPyload, TLoginPayload } from "@/types/auth.types";
 
 export function userLogin(payload: TLoginPayload) {
   return apiClient("/auth/login", {
+    method: "POST",
+    body: payload,
+  });
+}
+
+export function userRegistation(payload: RegistrationPyload) {
+  return apiClient("/auth/register", {
     method: "POST",
     body: payload,
   });

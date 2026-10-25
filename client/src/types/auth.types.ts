@@ -26,3 +26,10 @@ export type TLoginPayload = {
 };
 
 export type UserRole = "ADMIN" | "MENTOR" | "STUDENT";
+
+
+export interface RegistrationPyload {
+  name: string;
+  email: string;
+  password: string
+}
